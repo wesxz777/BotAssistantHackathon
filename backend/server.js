@@ -17,6 +17,11 @@ const app = express();
 // Serve the frontend from the same service in production.
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
+// Preserve links generated before the filename casing was corrected.
+app.get('/chatbot.html', (req, res) => {
+  res.redirect('/chatBot.html');
+});
+
 // Keep CORS available for local development with Live Server.
 app.use(cors({
   origin: process.env.NODE_ENV === 'production'
