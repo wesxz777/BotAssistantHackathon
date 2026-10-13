@@ -17,10 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const chips = document.querySelectorAll('.chip');
 
     const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-
     const BACKEND_URL = isLocalhost
         ? 'http://127.0.0.1:5000/api/ask'
-        : `${window.location.origin.replace(/-\d+\.app\.github\.dev/, '-5000.app.github.dev')}/api/ask`;
+        : `${window.location.origin}/api/ask`;
 
     console.log('🔗 Target Backend API URL:', BACKEND_URL);
 

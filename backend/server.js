@@ -14,9 +14,14 @@ dotenv.config({ path: path.join(__dirname, '.env') });
 
 const app = express();
 
-// Enable CORS for frontend clients (Live Server on 5500/5501 or Codespaces)
+// Serve the frontend from the same service in production.
+app.use(express.static(path.join(__dirname, '..', 'frontend')));
+
+// Keep CORS available for local development with Live Server.
 app.use(cors({
-  origin: '*',
+  origin: process.env.NODE_ENV === 'production'
+    ? false
+    : '*',
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type'],
 }));
