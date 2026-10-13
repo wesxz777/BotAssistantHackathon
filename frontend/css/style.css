@@ -1,0 +1,247 @@
+/* ==========================================================================
+   UMak AI Assistant Styles (Appended)
+   ========================================================================== */
+
+/* Replaced 'body' with a specific wrapper class to prevent global conflicts */
+.umak-body {
+    background: radial-gradient(circle at center, #0F1A34 0%, #050914 100%);
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Header Styling */
+.umak-body header {
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.logo-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    height: 45px;
+    width: auto;
+    object-fit: contain;
+}
+
+.header-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.uni-name {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.ai-text {
+    font-size: 0.65rem;
+    color: #8fa0c5;
+    letter-spacing: 1px;
+}
+
+/* Renamed '.container' to '.umak-container' to avoid clashing with landing page */
+.umak-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+    padding: 2rem;
+    margin-top: -8vh;
+}
+
+/* Typography */
+.hero {
+    text-align: center;
+    margin-bottom: 3.5rem;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+}
+
+.hero .highlight {
+    color: #F5D245; 
+}
+
+.hero p {
+    color: #8b9cc2;
+    font-size: 1.05rem;
+}
+
+/* Button Grid */
+.grid-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    width: 100%;
+    max-width: 650px;
+}
+
+.action-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: #a0b2d6; 
+    padding: 1.25rem 1.5rem;
+    border-radius: 16px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+}
+
+.action-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Floating Footer Search */
+.umak-body footer {
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.search-container {
+    position: relative;
+    width: 100%;
+    max-width: 750px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    border-radius: 40px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 1.25rem 4rem 1.25rem 1.75rem;
+    border-radius: 40px;
+    background: rgba(14, 22, 45, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+    font-size: 1.05rem;
+    outline: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(15px);
+}
+
+.search-input:focus {
+    background: rgba(14, 22, 45, 0.8);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 3px rgba(245, 210, 69, 0.15); 
+}
+
+.search-input::placeholder {
+    color: #5d6d8c;
+}
+
+.submit-btn {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: transform 0.2s;
+}
+
+.submit-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Mobile Compatibility */
+@media (max-width: 650px) {
+    .grid-buttons {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .umak-body header {
+        justify-content: center;
+    }
+}
+
+/* ==========================================================================
+   Chat Page Intro Animations
+   ========================================================================== */
+
+@keyframes umak-fade-in-up {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.umak-body header {
+    opacity: 0;
+    animation: umak-fade-in-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.umak-container {
+    opacity: 0;
+    animation: umak-fade-in-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
+}
+
+.umak-body footer {
+    opacity: 0;
+    animation: umak-fade-in-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+}
+
+/* ==========================================================================
+   Premium Typing Animations (FIXED)
+   ========================================================================== */
+
+.typing-cursor::after {
+    content: '|';
+    color: #F5D245;
+    font-weight: 300;
+    margin-left: 4px;
+    animation: cursor-blink 0.8s step-end infinite;
+}
+
+.blinking-exclamation {
+    color: #F5D245;
+    animation: cursor-blink 1s step-end infinite; 
+}
+
+@keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
