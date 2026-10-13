@@ -287,10 +287,12 @@ body {
 
 .text-gradient {
     background: linear-gradient(90deg, #2563eb 0%, #3b83f6d2 30%, #4ade80 70%, #facc15 100%);
+     justify-content: center;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     display: inline-block;
+    margin-left: 20px;
 }
 
 .hero-content p {

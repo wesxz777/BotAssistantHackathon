@@ -97,16 +97,32 @@ const QUERY_EXPANSIONS = new Map([
   ['disabled', ['disability']],
   ['enroll', ['application', 'requirement', 'grant']],
   ['enrollment', ['application', 'requirement', 'grant']],
+  ['head', ['director', 'chief', 'president']],
+  ['leader', ['director', 'head', 'president']],
+  ['located', ['location', 'find']],
+  ['location', ['located', 'find']],
+  ['responsible', ['charge', 'duty', 'function']],
+  ['responsibilities', ['charge', 'duty', 'function']],
 ]);
 const MAX_HISTORY_MESSAGES = 12;
 const MAX_HISTORY_CHARACTERS = 6000;
 
 function tokenize(text) {
   return (text.toLowerCase().match(/[a-z0-9]+/g) || [])
-    .map((term) => {
-      if (term.endsWith('ies') && term.length > 4) return `${term.slice(0, -3)}y`;
-      if (term.endsWith('s') && term.length > 4) return term.slice(0, -1);
-      return term;
+    .flatMap((term) => {
+      const variants = [term];
+      if (term.endsWith('ies') && term.length > 4) {
+        variants.push(`${term.slice(0, -3)}y`);
+      } else if (term.endsWith('s') && term.length > 4) {
+        variants.push(term.slice(0, -1));
+      }
+      if (term.endsWith('ing') && term.length > 5) {
+        variants.push(term.slice(0, -3));
+      }
+      if (term.endsWith('ed') && term.length > 4) {
+        variants.push(term.slice(0, -2));
+      }
+      return variants;
     });
 }
 
@@ -119,12 +135,21 @@ function retrieveRelevantContext(question) {
     .map((chunk) => {
       const chunkTerms = new Set(tokenize(chunk.text));
       const headingTerms = new Set(tokenize(chunk.text.split('\n')[0]));
+      const normalizedChunk = chunk.text.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+      const meaningfulQueryTerms = queryTerms.filter((term) => term.length > 3);
+      const hasPhraseMatch = meaningfulQueryTerms.length >= 2
+        && meaningfulQueryTerms.some((term, index) => (
+          index < meaningfulQueryTerms.length - 1
+          && normalizedChunk.includes(
+            `${term} ${meaningfulQueryTerms[index + 1]}`,
+          )
+        ));
       const score = queryTerms.reduce(
         (total, term) => total
           + (chunkTerms.has(term) ? 1 : 0)
           + (headingTerms.has(term) ? 4 : 0),
         0,
-      );
+      ) + (hasPhraseMatch ? 3 : 0);
 
       return { ...chunk, score };
     })
@@ -379,6 +404,71 @@ function getUniversityPresidentAnswer(question) {
   return null;
 }
 
+function getOfficeLeadershipAnswer(question) {
+  const normalizedQuestion = question.toLowerCase();
+  const asksForLeader = /\b(who|head|director|leader|in charge)\b/.test(normalizedQuestion)
+    && /\b(office|center|registrar|president|cit|cash|accounting)\b/.test(normalizedQuestion);
+  if (!asksForLeader) return null;
+
+  const offices = [
+    {
+      name: 'Center for Information Technology',
+      aliases: ['center for information technology', 'cit'],
+      labels: ['Director'],
+    },
+    {
+      name: 'Cash Office',
+      aliases: ['cash office'],
+      labels: ['Office Head'],
+    },
+    {
+      name: 'Accounting Office',
+      aliases: ['accounting office'],
+      labels: ['Office Head'],
+    },
+    {
+      name: 'Office of the University Registrar',
+      aliases: ['office of the university registrar', 'university registrar', 'registrar'],
+      labels: ['University Registrar'],
+    },
+    {
+      name: 'University Publication Office',
+      aliases: ['university publication office', 'publication office'],
+      labels: ['Director'],
+    },
+  ];
+  const office = offices.find((candidate) => (
+    candidate.aliases.some((alias) => normalizedQuestion.includes(alias))
+  ));
+  if (!office) return null;
+
+  const sourceText = sourceDocuments.get('sources04.txt') || '';
+  const escapedOfficeName = office.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const headingMatch = sourceText.match(
+    new RegExp(`(?:^|\\r?\\n)${escapedOfficeName}\\s*(?:\\r?\\n|$)`, 'i'),
+  );
+  if (!headingMatch || headingMatch.index === undefined) return null;
+
+  const officeIndex = headingMatch.index + headingMatch[0].indexOf(office.name);
+  const remainingSource = sourceText.slice(officeIndex);
+  const nextHeading = remainingSource.search(
+    /\n(?=(?:Office of |Center for |University Publication Office|University President|University Registrar))/i,
+  );
+  const sectionText = nextHeading > 0
+    ? remainingSource.slice(0, nextHeading)
+    : remainingSource.slice(0, 1800);
+  for (const label of office.labels) {
+    const match = sectionText.match(new RegExp(
+      `(?:^|\\n)[●○]?\\s*${label}:\\s*([^\\n]+)`,
+      'i',
+    ));
+    if (match) {
+      return `The ${office.name} is headed by **${match[1].trim()}**.`;
+    }
+  }
+  return null;
+}
+
 function getCampusLocationAnswer(question) {
   const normalizedQuestion = question.toLowerCase();
   const asksForLocation = (
@@ -563,6 +653,11 @@ app.post('/api/ask', askLimiter, async (req, res) => {
     const presidentAnswer = getUniversityPresidentAnswer(question);
     if (presidentAnswer) {
       return res.status(200).json({ answer: presidentAnswer });
+    }
+
+    const officeLeadershipAnswer = getOfficeLeadershipAnswer(question);
+    if (officeLeadershipAnswer) {
+      return res.status(200).json({ answer: officeLeadershipAnswer });
     }
 
     const offeringsAnswer = getProgramOfferingsAnswer(question);

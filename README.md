@@ -130,14 +130,17 @@ The retrieval flow is:
 
 1. Load the official UMak text documents.
 2. Split each document into paragraph-based chunks.
-3. Tokenize and rank chunks against the user's question.
+3. Normalize singular/plural and common verb forms, expand common wording
+   variants, and rank chunks against the user's question.
 4. Include relevant neighboring chunks to preserve context.
 5. Send the selected context, conversation history, and question to Groq.
 6. Render the returned answer in the chat interface.
 
 Some structured requests, including college lists, program offerings,
-requirements, and campus locations, are handled directly from the loaded
-documents before an AI request is made.
+requirements, campus locations, the university president, and selected office
+leaders are handled directly from the loaded documents before an AI request is
+made. This provides deterministic answers for high-value factual questions
+while keeping the general retrieval flow available for broader requests.
 
 To update the assistant's information, add or edit official `.txt` files in
 `backend/sourcesBOT`, then restart or redeploy the backend.
