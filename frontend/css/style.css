@@ -292,7 +292,7 @@ body {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     display: inline-block;
-    margin-left: 20px;
+    margin-left: 100px;
 }
 
 .hero-content p {
