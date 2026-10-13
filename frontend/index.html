@@ -10,7 +10,25 @@
 </head>
     <body class="bg-[#081226] text-white">
 
+        <div id="site-preloader">
+    <div class="preloader-content">
+        <div class="preloader-logo-wrapper">
+            <img src="assets/images/UMak Logo Registered.png" alt="UMak Logo" class="preloader-logo">
+            <div class="preloader-text">
+                <span class="preloader-title">UNIVERSITY OF MAKATI</span>
+                <span class="preloader-subtitle">AI ASSISTANT</span>
+            </div>
+        </div>
         
+        <div class="loading-bars">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </div>
+</div>
 
         <video autoplay loop muted playsinline class="site-bg-video">
             <source src="assets/Video/umakvid.mp4" type="video/mp4">
@@ -264,22 +282,28 @@
         <div class="carousel-track" id="how-it-works-track">
             
             <div class="step-card carousel-card">
-                <div class="step-number">1</div>
-                <h3>Ask</h3>
+                <div class="step-header-row">
+                    <div class="step-number">1</div>
+                    <h3>Ask</h3>
+                </div>
                 <p>Type a question about enrollment, schedules, or services.</p>
                 <img src="assets/images/ask.png" alt="Ask" class="step-box-img">
             </div>
             
             <div class="step-card carousel-card">
-                <div class="step-number">2</div>
-                <h3>Search the sources</h3>
+                <div class="step-header-row">
+                    <div class="step-number">2</div>
+                    <h3>Search the sources</h3>
+                </div>
                 <p>The assistant looks only through the provided university documents.</p>
                 <img src="assets/images/search.png" alt="Search" class="step-box-img">
             </div>
             
             <div class="step-card carousel-card">
-                <div class="step-number">3</div>
-                <h3>Answer with a source</h3>
+                <div class="step-header-row">
+                    <div class="step-number">3</div>
+                    <h3>Answer with a source</h3>
+                </div>
                 <p>You get a direct answer and the document it came from, or a clear "Not found".</p>
                 <img src="assets/images/response.png" alt="Response" class="step-box-img">
             </div>
@@ -298,8 +322,25 @@
     </div>
 
 </section>
-
-
+<!-- 6. Call To Action (Start Experiencing It) -->
+    <section class="cta-section" id="cta-section">
+        <div class="container">
+            <div class="cta-header">
+                <h2 id="typing-cta-heading">Start Experiencing It</h2>
+                <p>Ask your first question now.</p>
+            </div>
+            <div class="cta-box">
+                <div class="cta-text">
+                    <h2>Step Into the Future with Heron Intelligence Today.</h2>
+                    <p>Try the early access of UMak AI now.</p>
+                </div>
+                <div class="cta-button-container">
+                    <a href="chatBot.html" class="btn-primary">Chat with UMak AI Assistant</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
 </section>
     <!-- 7. Footer Section -->
     <footer class="site-footer">
@@ -533,6 +574,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+</script>
+
+<script>
+    const preloader = document.getElementById('site-preloader');
+    let preloaderHidden = false;
+
+    const hidePreloader = () => {
+        if (!preloaderHidden && preloader) {
+            preloaderHidden = true;
+            preloader.classList.add('hide-preloader');
+        }
+    };
+
+    // Hides when page finishes loading, or forces hide after 2 seconds
+    window.addEventListener('load', hidePreloader);
+    setTimeout(hidePreloader, 2000); 
 </script>
 
 </body>
