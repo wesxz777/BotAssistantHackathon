@@ -1,247 +1,1384 @@
-/* ==========================================================================
-   UMak AI Assistant Styles (Appended)
-   ========================================================================== */
+/* =========================================
+   1. Base & Global Styles
+   ========================================= */
+/* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth;
+}
 
-/* Replaced 'body' with a specific wrapper class to prevent global conflicts */
-.umak-body {
-    background: radial-gradient(circle at center, #0F1A34 0%, #050914 100%);
+body {
+    background-color: #051329; 
     color: #ffffff;
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative; /* NEW: Forces the absolute navbar to stick to the top of the page, not the screen */
+}
+
+/* =========================================
+   NEW: Page Encasement Wrapper
+   ========================================= */
+.page-encasement {
+    max-width: 1345px; /* Adjust this to make the box wider or narrower */
+    width: 100%;
+    margin: 0 auto;
     min-height: 100vh;
+    position: relative;
+    z-index: 1;
+    
+    /* The crisp left and right lines */
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+    
+    /* The semi-transparent dark box background */
+    background-color: rgba(5, 19, 41, 0.368); 
+    
+    /* The glassmorphism blur effect */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    
+    /* Optional: Subtle drop shadow to pop it off the background */
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+    
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px; /* Uniform 24px padding on all screen sizes */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.section-header {
+    margin-bottom: 40px;
+    padding: 0 10px;
+}
+
+/* Fluid responsive headers to prevent text clipping */
+.section-header h2 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.section-header p {
+    color: #94a3b8;
+    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+}
+
+.site-bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -9999; /* Keeps it behind all content */
+    pointer-events: none; /* Ensures mouse clicks pass through the video */
+}
+
+.video-glow-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -9998;
+    background: radial-gradient(circle at 85% 15%, rgba(132, 169, 140, 0.4) 0%, rgba(5, 19, 41, 0.7) 50%, rgba(5, 19, 41, 0.85) 100%);
+}
+
+.video-fade-overlay {
+    position: fixed;
+    bottom: -2px;
+    left: 0;
+    width: 100vw;
+    height: 100vh; 
+    z-index: -9997; 
+    background: linear-gradient(to bottom, 
+        rgba(5, 19, 41, 0) 0%, 
+        rgba(5, 19, 41, 0) 20%, 
+        rgba(5, 19, 41, 0.8) 85%, 
+        rgba(5, 19, 41, 1) 100%
+    );
+}
+
+
+.text-blue { color: #3b82f6; }
+.text-green { color: #a3e635; }
+.text-yellow { color: #facc15; }
+
+/* Buttons */
+.btn-primary {
+    display: inline-block;
+    background-color: #facc15;
+    color: #051329;
+    padding: 3px 20px;
+   
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.btn-primary:hover {
+    background-color: #eab308;
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   2. Navigation & Hero Section
+   ========================================= */
+/* Sticky Navigation Bar */
+
+.sticky-nav {
+    position: fixed;
+    top: 0;
+    
+    /* NEW: Centers the fixed nav and restricts it to exactly match the encasement box */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 1343px; 
+    
+    z-index: 9999;
+    background: rgba(5, 19, 41, 0.204); 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    transition: background 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    width: 100%;
+    max-width: 100%; /* Allows it to stretch all the way to the edges */
+    padding: 0 40px; /* Adjust this number to move them closer/further from the white lines */
+}
+
+/* New Wrapper for right-aligned items */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Space between the links and the button */
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.logo-text {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-/* Header Styling */
-.umak-body header {
-    width: 100%;
-    padding: 2rem;
+.logo-title {
+    font-weight: 800;
+    color: #ffffff;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+}
+
+.logo-subtitle {
+    font-size: 9px;
+    color: #94a3b8;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.nav-links {
     display: flex;
-    justify-content: flex-start;
+    gap: 2rem;
 }
 
-.logo-link {
+.nav-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+    color: #ffffff;
+}
+
+.btn-primary.nav-btn {
+    padding: 10px 22px;
+    font-size: 0.9rem;
+}
+
+/* Hide links on mobile to prevent overlapping */
+@media (max-width: 900px) {
+    .nav-links {
+        display: none; 
+    }
+}
+
+/* =========================================
+   2. Hero section
+   ========================================= */
+
+
+.hero-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 190px 20px 60px 20px;
+    
+}
+
+
+
+/* Video Background */
+.hero-bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+}
+
+
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    width: 100%;
+    max-width: 900px;
+}
+
+/* Responsive fluid heading size: automatically scales down on mobile so long text fits */
+/* Responsive fluid heading size: automatically scales down on mobile so text never overflows */
+.hero-content h1 {
+    font-size: clamp(1.3rem, 3.8vw, 4rem); 
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: #ffffff;
+    filter: drop-shadow(3px 6px 12px rgba(0, 0, 0, 0.8)); 
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0 10px;
+}
+
+.text-gradient {
+    background: linear-gradient(90deg, #2563eb 0%, #3b83f6d2 30%, #4ade80 70%, #facc15 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+}
+
+.hero-content p {
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    color: #cbd5e1;
+    max-width: 600px;
+    margin: 0 auto 40px auto;
+    padding: 0 10px;
+}
+
+/* =========================================
+   3. Split Section (Challenges)
+   ========================================= */
+.split-section {
+    padding: 150px 0 150px 0;
+    /* background: linear-gradient(180deg, #051329 0%, #0c2652 100%); */
+}
+
+.split-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.split-text {
+    flex: 1;
+}
+
+.split-text h2 {
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.split-text p {
+    font-size: 1rem;
+    color: #94a3b8;
+    max-width: 100%;
+}
+
+.split-image {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start; /* This pushes the mascot to the far left of its column */
+    background: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+.split-image img {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    display: block;
+    width: 100%;
+    max-width: 750px;
+    height: auto;
+    filter: drop-shadow(0px 12px 24px rgba(0, 0, 0, 0.65));
+}
+
+img.heron-hero-img {
+    width: 100% !important;
+    max-width: 550px !important;
+    height: auto !important;
+}
+
+
+/* =========================================
+   4. Solutions Section ("What It Solves")
+   ========================================= */
+.solutions-section {
+    padding: 180px 0;
+    /* background-color: #030d1cc4; */
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.dark-card {
+    background-color: #0b254d;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 3px solid #facc15;
+}
+
+.dark-card h3 {
+    color: #facc15;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.dark-card p {
+    color: #cbd5e1;
+    font-size: 0.95rem;
+}
+
+/* =========================================
+   New: Challenge Text Boxes 
+   ========================================= */
+.challenge-box {
+    /* Highly transparent blue background to let the video show through */
+    background-color: rgba(11, 37, 77, 0.118); 
+    
+    /* Thin yellow border wrapping the entire box */
+  border: 0.5px solid rgb(255, 255, 255, .2);
+    
+    /* Sharp corners to match your reference image */
+    border-radius: 10px; 
+    
+    padding: 30px;
+    margin-bottom: 20px;
+    
+    /* Strong glassmorphism blur effect */
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    
+    /* Subtle shadow to separate the glass from the background */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+/* Remove bottom margins since the box handles the padding */
+.challenge-box h2 {
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 0;
+}
+
+.challenge-box p {
+    font-size: 1rem;
+    color: #cbd5e1;
+    margin-bottom: 0;
+    line-height: 1.7;
+}
+
+/* Fix Mascot Alignment for the Left Side */
+
+
+/* =========================================
+   Single Card Grabbing Mascot
+   ========================================= */
+.single-grab-wrapper {
+    position: relative;
+    height: 100%;
+}
+
+.grab-card {
+    position: relative;
+    width: 100%;
+    z-index: 2; 
+    background-color: #0b254d;
+}
+
+.mascot-grab-back {
+    position: absolute;
+    left: 50%;
+    /* Lowered back down to the edge */
+    top: 0%; 
+    transform: translate(-50%, -52%);
+    width: 135%;
+    z-index: 1; 
+    pointer-events: none;
+}
+
+.mascot-fingers-front {
+    position: absolute;
+    left: 50%;
+    /* Lowered back down to match the body */
+    top: 0%; 
+    transform: translate(-50%, -52%);
+    width: 135%; 
+    z-index: 3; 
+    pointer-events: none;
+    filter: drop-shadow(0 15px 15px rgba(0,0,0,0.5)); 
+}
+
+/* =========================================
+   5. Comparison Section ("AI Is The Real Change")
+   ========================================= */
+.comparison-section {
+     padding: 180px 0;
+    /* background: linear-gradient(180deg, #091e42 0%, #0c2652 100%); */
+}
+
+.comparison-box {
+    display: flex;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 40px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+.comparison-half {
+    flex: 1;
+    padding: 40px;
+}
+
+.comparison-half h3 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+}
+
+.comparison-half ul {
+    list-style: none;
+}
+
+.comparison-half ul li {
+    margin-bottom: 12px;
+    font-size: 1rem;
+    position: relative;
+    padding-left: 20px;
+}
+
+.comparison-half ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+}
+
+.dark-bg {
+    background-color: #081a38;
+    color: #cbd5e1;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-right: none;
+}
+
+/* Remove top accent line from cards inside comparison box */
+.comparison-box .step-card {
+    border-top: none;
+    padding-top: 0;
+}
+
+.comparison-box .step-card::before {
+    display: none;
+    content: none;
+}
+
+.yellow-bg {
+    background-color: #facc15;
+    color: #051329;
+}
+
+.yellow-bg h3 {
+    color: #051329;
+}
+
+/* =========================================
+   6. How It Works Section
+   ========================================= */
+.how-it-works-section {
+    padding: 180px 0;
+    /* background-color: #051329;  */
+}
+
+.step-card {
+    padding-top: 20px;
+    border-top: 2px solid #facc15;
+    position: relative;
+}
+
+.step-number {
+    width: 35px;
+    height: 35px;
+    background-color: #facc15;
+    color: #051329;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+.step-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+}
+
+.step-card p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+}
+
+/* =========================================
+   7. CTA Section ("Start Experiencing It")
+   ========================================= */
+.cta-section {
+    padding: 180px 0 300px 0;
+    /* background: linear-gradient(180deg, #091e42 0%, #0c2652 100%);  */
+    text-align: center;
+}
+
+.cta-header {
+    margin-bottom: 40px;
+    padding: 0 10px;
+}
+
+.cta-header h2 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.cta-header p {
+    color: #facc15;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.cta-box {
+    /* 1. Set a transparent border to carve out space for the colored gradient */
+    border: 1px solid transparent; 
+    
+    /* 2. Multiple Backgrounds: 
+       Top Layer: Your original dark blue radial gradient (clipped to the inside)
+       Bottom Layer: The colorful gradient (clipped to the border edge) */
+    background: 
+        radial-gradient(circle at 65% 50%, #16386e 0%, #0b1d3a 55%, #051020 100%) padding-box,
+        linear-gradient(90deg, #facc15, #4ade80, #3b82f6, #facc15) border-box;
+        
+    /* 3. Make the bottom gradient 300% wider so we have room to slide it */
+    background-size: 100% 100%, 300% 100%;
+    
+    /* 4. Run the sliding animation infinitely */
+    animation: animateBorderGlow 4s linear infinite;
+
+    /* Keep all your original layout rules exactly the same! */
+    border-radius: 16px;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    gap: 30px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+}
+
+.cta-text {
+    max-width: 650px;
+}
+
+.cta-text h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: #ffffff;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.cta-text p {
+    color: #94a3b8;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.cta-button-container {
+    flex-shrink: 0;
+}
+
+/* 5. The Keyframes that move the background gradient left and right */
+@keyframes animateBorderGlow {
+    0% { 
+        /* Top background stays still (0% 0%), bottom background starts at left (0% 50%) */
+        background-position: 0% 0%, 0% 50%; 
+    }
+    50% { 
+        /* Bottom background slides completely to the right */
+        background-position: 0% 0%, 100% 50%; 
+    }
+    100% { 
+        /* Bottom background slides back to the start seamlessly */
+        background-position: 0% 0%, 0% 50%; 
+    }
+}
+
+/* =========================================
+   8. Footer
+   ========================================= */
+.site-footer {
+    background: url('../assets/images/About us bg image.png') center/cover no-repeat;
+    padding: 10px 10px 10px; 
+    color: #ffffff;
+    position: relative;
+    
+    /* THE FIX: This physically masks (erases) the top 80 pixels of the background image, 
+       creating a flawless fade into the transparent glass above it */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0px, black 80px);
+    mask-image: linear-gradient(to bottom, transparent 0px, black 80px);
+}
+
+/* THE SEAMLESS FOG LAYER */
+.site-footer::before {
+    content: "";
+    position: absolute;
+    top: 0; 
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* Simplified: We only need this to darken the bottom now for readability */
+    background: linear-gradient(
+        to bottom, 
+        transparent 0%,              /* Stays invisible at the top */
+        rgba(0, 0, 0, 0.7) 60%,      /* Darkens gradually near the bottom */
+        #000000 100%                 /* Blends into pure black at the bottom */
+    );
+    
+    z-index: 1;
+    pointer-events: none;
+}
+
+.footer-banner {
+    background: transparent;
+    padding: 20px 0;
+    text-align: center;
+    position: relative;
+    /* 3. Ensures your "ABOUT US" text sits safely on top of the fog */
+    z-index: 2; 
+}
+
+.footer-banner h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: 2px;
+}
+
+.footer-credits {
+    padding: 20px 0;
+    color: #64748b;
+    font-size: 0.9rem;
+    text-align: center;
+    position: relative;
+    /* 3. Ensures your credits sit safely on top of the fog */
+    z-index: 2; 
+}
+
+.footer-credits h4 {
+    color: #facc15;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+/* =========================================
+   9. Mobile Responsiveness & Breakpoints
+   ========================================= */
+@media (max-width: 992px) {
+    .grid-3 {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .split-content, .comparison-box, .cta-box {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .split-text, .cta-text {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .split-text p {
+        max-width: 100%;
+    }
+
+    .comparison-half {
+        padding: 30px 20px;
+    }
+    
+    .dark-bg {
+        border-right: 1px solid rgba(255,255,255,0.1);
+        border-bottom: 1px solid #1e3a6e;
+    }
+
+    .cta-box {
+        padding: 30px 20px;
+    }
+
+    .cta-button-container {
+        width: 100%;
+    }
+    
+    .cta-box .btn-primary {
+        display: block;
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    /* Mascot mobile safety scaling */
+    .single-grab-wrapper {
+        margin-top: 130px;
+    }
+
+    .mascot-grab-back, 
+    .mascot-fingers-front {
+        width: 120%; 
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 15px 20px;
+    }
+    
+    .logo {
+        height: 32px;
+    }
+
+    .hero-section {
+        padding: 90px 15px 40px 15px;
+    }
+}
+
+/* =========================================
+   10. Animations
+   ========================================= */
+.animate-drop {
+    opacity: 0;
+    transform: translateY(-40px); 
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.animate-drop.show {
+    opacity: 1;
+    transform: translateY(0); 
+}
+
+p.animate-drop {
+    transition-delay: .7s;
+}
+
+/* ========================================= */
+/* NEW: Slide In From Left Animation         */
+/* ========================================= */
+.animate-slide-left {
+    opacity: 0;
+    transform: translateX(-60px); /* Starts pushed 60px to the left */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.animate-slide-left.show {
+    opacity: 1;
+    transform: translateX(0); /* Slides perfectly into its normal place */
+}
+
+/* Ensure your existing paragraph delay works for this new animation too */
+p.animate-slide-left {
+    transition-delay: .7s;
+}
+
+.delay-1 { transition-delay: .9s; }
+.delay-2 { transition-delay: 1.3s; }
+.delay-3 { transition-delay: 1.7s; }
+
+/* =========================================
+   11. SYMMETRICAL AUTO-ADJUSTING CAROUSEL
+   ========================================= */
+
+/* =========================================
+   11. SYMMETRICAL AUTO-ADJUSTING CAROUSEL
+   ========================================= */
+.dynamic-title-wrapper {
+    /* 1. Flexbox instantly deletes the invisible HTML whitespace bug */
+    display: flex; 
+    justify-content: center;
+    width: 100%;
+    overflow: visible; 
+}
+
+.word-window {
+    display: block; 
+    overflow: hidden;
+    height: 1.6em; 
+    
+    /* 2. CRITICAL RESTORATION: Forces window to wrap the absolute longest phrase */
+    width: max-content; 
+    
+    /* 3. NEW GUARANTEE: Forbids the flex parent from squishing this window, 
+       permanently preventing the left/right width clipping */
+    flex-shrink: 0; 
+}
+
+.word-track {
+    display: flex;
+    flex-direction: column;
+    
+    /* 4. Centers shorter words (like "Student Life") flawlessly in the track */
+    align-items: center; 
+    
+    margin: 0;
+    padding: 0;
+    will-change: transform;
+}
+
+.word {
+    display: block;
+    height: 1.6em; 
+    line-height: 1.6em; 
+    white-space: nowrap;
+    text-align: center; 
+    
+    /* 5. Keeps the protective padding so the gradient ink is never sliced */
+    padding: 0 15px; 
+    box-sizing: border-box;
+}
+/* =========================================
+    Chat Interface Styles (`chat.html`)
+   ========================================= */
+.chat-page-body {
+    background: radial-gradient(circle at 50% 40%, #0d234a 0%, #06152e 50%, #030b1a 100%);
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.chat-header {
+    padding: 25px 40px;
+}
+
+.chat-header a {
     text-decoration: none;
     color: inherit;
 }
 
-.logo-container {
+.chat-logo-link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.chat-logo-link:hover {
+    opacity: 0.85;
+}
+
+.chat-logo-container {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-.logo {
-    height: 45px;
-    width: auto;
+.chat-logo {
+    width: 38px;
+    height: 38px;
     object-fit: contain;
 }
 
-.header-text {
+.chat-logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.uni-name {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+}
+
+.ai-subtitle {
+    font-size: 9px;
+    color: #94a3b8;
+    letter-spacing: 1px;
+}
+
+.chat-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between; 
+    padding: 20px 20px 40px 20px; 
+    box-sizing: border-box;
+}
+
+.chat-content-wrapper {
+    text-align: center;
+    max-width: 700px;
+    width: 100%;
+    margin-top: auto; 
+    margin-bottom: auto;
+}
+
+.chat-greeting {
+    font-size: clamp(2.3rem, 5vw, 3.2rem);
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+    position: relative;
+    display: inline-block;
+}
+
+.highlight-text {
+    color: #facc15;
+}
+
+.chat-prompt-sub {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+}
+
+.suggestion-chips {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: center;
+    gap: 12px;
+    max-width: 600px;
+    margin: 25px auto 0 auto; 
+}
+
+.chip {
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #94a3b8;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.chip:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+    border-color: rgba(250, 204, 21, 0.3);
+    color: #ffffff;
+}
+
+.chat-input-container {
+    width: 100%;
+    max-width: 680px;
+    margin: 40px auto 0 auto; 
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.chat-input-box {
+    background-color: #0b1a36;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+.chat-text-input {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+}
+
+.chat-text-input::placeholder {
+    color: #64748b;
+}
+
+.chat-input-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.input-icon-btn {
+    background: transparent;
+    border: none;
+    color: #64748b;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.2s;
+}
+
+.input-icon-btn:hover {
+    color: #ffffff;
+}
+
+.input-send-btn {
+    background-color: #ffffff;
+    color: #051329;
+    border: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.input-send-btn:hover {
+    background-color: #facc15;
+}
+
+@media (max-width: 650px) {
+    .suggestion-chips {
+        grid-template-columns: 1fr;
+    }
+    
+    .chat-header {
+        padding: 20px;
+    }
+}
+
+/* Typing Cursor Effect */
+.typing-cursor::after {
+    content: "|";
+    display: inline-block;
+    margin-left: 2px;
+    animation: blink-cursor 0.7s infinite;
+    font-weight: 400;
+}
+
+@keyframes blink-cursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+
+/* Ensure the body takes full height without accidental double scrollbars */
+html, body.chat-page-body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Keeps header and bottom input bar anchored */
     display: flex;
     flex-direction: column;
 }
 
-.uni-name {
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 1.5px;
+/* Header stays pinned to the top */
+.chat-header {
+    flex-shrink: 0;
+    z-index: 10;
 }
 
-.ai-text {
-    font-size: 0.65rem;
-    color: #8fa0c5;
-    letter-spacing: 1px;
+/* Main workspace occupies the remaining viewport space */
+.chat-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100vh - 70px); /* Adjust 70px to your header's height */
+    overflow: hidden;
+    position: relative;
 }
 
-/* Renamed '.container' to '.umak-container' to avoid clashing with landing page */
-.umak-container {
+/* Message container now scrolls vertically */
+.chat-content-wrapper {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center;     
+    text-align: center;      
     width: 100%;
     max-width: 900px;
-    padding: 2rem;
-    margin-top: -8vh;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+    overflow-y: auto; /* Enables scrolling for chat messages */
+    scroll-behavior: smooth;
 }
 
-/* Typography */
-.hero {
-    text-align: center;
-    margin-bottom: 3.5rem;
+/* Optional: Clean scrollbar styling */
+.chat-content-wrapper::-webkit-scrollbar {
+    width: 6px;
+}
+.chat-content-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+.chat-content-wrapper::-webkit-scrollbar-thumb {
+    background: #1e3a8a;
+    border-radius: 4px;
+}
+.chat-content-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #2563eb;
 }
 
-.hero h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    letter-spacing: -1px;
-}
-
-.hero .highlight {
-    color: #F5D245; 
-}
-
-.hero p {
-    color: #8b9cc2;
-    font-size: 1.05rem;
-}
-
-/* Button Grid */
-.grid-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+/* Input container stays pinned at the bottom */
+.chat-input-container {
+    flex-shrink: 0;
     width: 100%;
-    max-width: 650px;
+    max-width: 900px;
+    margin: 0 auto 1.5rem auto;
+    padding: 0 1rem;
 }
 
-.action-btn {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    color: #a0b2d6; 
-    padding: 1.25rem 1.5rem;
-    border-radius: 16px;
-    font-size: 0.95rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(10px);
+/* Ensure all bot responses maintain formal justified reading layout */
+.bot-bubble {
+    text-align: justify !important;
+    text-justify: inter-word;
 }
 
-.action-btn:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.15);
-    color: #ffffff;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+.bot-bubble .bot-message-content {
+    text-align: justify !important;
+    text-justify: inter-word;
+    display: block;
 }
 
-/* Floating Footer Search */
-.umak-body footer {
-    width: 100%;
-    padding: 2rem;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 2rem;
+.bot-bubble ul, .bot-bubble ol {
+    text-align: left !important;
+    padding-left: 1.25rem;
+    margin: 0.5rem 0;
 }
 
-.search-container {
-    position: relative;
-    width: 100%;
-    max-width: 750px;
-    display: flex;
-    align-items: center;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-    border-radius: 40px;
-}
-
-.search-input {
-    width: 100%;
-    padding: 1.25rem 4rem 1.25rem 1.75rem;
-    border-radius: 40px;
-    background: rgba(14, 22, 45, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    color: #ffffff;
-    font-size: 1.05rem;
-    outline: none;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(15px);
-}
-
-.search-input:focus {
-    background: rgba(14, 22, 45, 0.8);
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 0 3px rgba(245, 210, 69, 0.15); 
-}
-
-.search-input::placeholder {
-    color: #5d6d8c;
-}
-
-.submit-btn {
-    position: absolute;
-    right: 12px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: transform 0.2s;
-}
-
-.submit-btn:hover {
-    transform: scale(1.05);
-}
-
-/* Mobile Compatibility */
-@media (max-width: 650px) {
-    .grid-buttons {
-        grid-template-columns: 1fr;
-    }
+/* =========================================
+   Mascot CSS Sprite Animation
+   ========================================= */
+.mascot-sprite-animated {
+    /* 1. Use a perfect, whole number pixel width */
+    width: 370px;  
+    height: 370px; 
     
-    .hero h1 {
-        font-size: 2.5rem;
-    }
+    background-image: url('../assets/anims/Sheet (1).png');
+    background-repeat: no-repeat;
+    background-position: 0 0;
     
-    .umak-body header {
-        justify-content: center;
-    }
+    /* 2. Squish the total background size slightly so it perfectly equals 273 * 48 */
+    background-size: 23680px 370px; 
+    
+  /* Changes margin to: Top 10px, Right 0, Bottom 10px, Left auto (pushes it right) */
+     margin: 0 auto 0 0; /* Top: 0, Right: auto, Bottom: 0, Left: 0 */
+    animation: playMascot 4s steps(64) infinite;
+    
+  /* ========================================== */
+    /* NEW: Scale the animation up!               */
+    /* ========================================== */
+    /* Added translateX(40px) to slide it to the right. Adjust the 40px to whatever you need! */
+    transform: scale(1.4) translate(55px, -23px); 
+    transform-origin: center center;
 }
 
-/* ==========================================================================
-   Chat Page Intro Animations
-   ========================================================================== */
-
-@keyframes umak-fade-in-up {
+@keyframes playMascot {
     0% {
-        opacity: 0;
-        transform: translateY(30px);
+        background-position: 0 0;
     }
     100% {
-        opacity: 1;
-        transform: translateY(0);
+        /* 3. Match the exact total width from the background-size above */
+        background-position: -23680px 0; 
     }
 }
 
-.umak-body header {
-    opacity: 0;
-    animation: umak-fade-in-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+/* Mobile Responsiveness for the Sprite */
+@media (max-width: 480px) {
+    .mascot-sprite-animated {
+        transform: scale(0.85); /* Shrinks the animation to fit mobile screens */
+        transform-origin: center center;
+    }
 }
 
-.umak-container {
-    opacity: 0;
-    animation: umak-fade-in-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
+/* ========================================================================== */
+/* Chatbot AI Table Formatting                                                */
+/* ========================================================================== */
+.bot-bubble table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-.umak-body footer {
-    opacity: 0;
-    animation: umak-fade-in-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+.bot-bubble th,
+.bot-bubble td {
+  padding: 0.65rem 0.9rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bot-bubble th {
+  background-color: rgba(250, 204, 21, 0.15); /* Soft gold tint */
+  color: #facc15; /* UMak yellow highlight */
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  border-bottom: 1px solid rgba(250, 204, 21, 0.3);
+}
+
+.bot-bubble tr:last-child td {
+    
+  border-bottom: none;
+}
+
+.bot-bubble tr:hover td {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+/* ========================================================================== */
+/* Hide Scrollbar Globally While Allowing Page Scroll                        */
+/* ========================================================================== */
+html, body {
+  /* Firefox */
+  scrollbar-width: none;
+  
+  /* Internet Explorer & older Edge */
+  -ms-overflow-style: none;
+}
+
+/* Chrome, Edge, Safari, and Opera */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 /* ==========================================================================
-   Premium Typing Animations (FIXED)
+   Responsive Upgrades for Container & Header
    ========================================================================== */
 
-.typing-cursor::after {
-    content: '|';
-    color: #F5D245;
-    font-weight: 300;
-    margin-left: 4px;
-    animation: cursor-blink 0.8s step-end infinite;
+/* 1. When the screen is smaller than the encasement box, remove the borders 
+      so it seamlessly transitions into a full-width mobile layout */
+@media (max-width: 1360px) {
+    .page-encasement {
+        border-left: none;
+        border-right: none;
+    }
 }
 
-.blinking-exclamation {
-    color: #F5D245;
-    animation: cursor-blink 1s step-end infinite; 
+/* 2. Tablet Adjustments */
+@media (max-width: 992px) {
+    .header-container {
+        padding: 0 24px; /* Reduce header padding */
+    }
 }
 
-@keyframes cursor-blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+/* 3. Standard Mobile Adjustments */
+@media (max-width: 768px) {
+    .header-container {
+        height: 70px; /* Make the header slightly thinner */
+        padding: 0 20px;
+    }
+    
+    .logo-image {
+        width: 30px !important;
+        height: 30px !important;
+    }
+    
+    .logo-title {
+        font-size: 11px; /* Scale down long university name */
+    }
+    
+    .btn-primary.nav-btn {
+        padding: 8px 16px; /* Shrink the button slightly */
+        font-size: 0.8rem;
+    }
+}
+
+/* 4. Small Mobile Adjustments (e.g., iPhone SE) */
+@media (max-width: 480px) {
+    .header-container {
+        padding: 0 15px; /* Minimum padding for small screens */
+    }
+    
+    .logo-title {
+        font-size: 9px;
+    }
+    
+    .logo-subtitle {
+        font-size: 7px;
+    }
+    
+    .btn-primary.nav-btn {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+    }
+    
+    /* Ensure the logo and text stack doesn't gap too much */
+    .logo-wrapper {
+        gap: 8px;
+    }
 }

@@ -10,26 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css" />
 </head>
-<body class="bg-[#081226] text-white">
+    <body class="bg-[#081226] text-white">
 
-   <!-- Header Navigation -->
-    <header class="navbar">
-        <div class="logo-container">
-            <img src="assets/images/UMak Logo Registered.png" alt="University of Makati Logo" class="logo">
-            <div class="logo-text-stack">
-                <span class="uni-name">UNIVERSITY OF MAKATI</span>
-                <span class="ai-subtitle">AI ASSISTANT</span>
-            </div>
-        </div>
-    </header>
-
-    <!-- 1. Hero Section -->
-    <section class="hero-section">
-        
-        <!-- ========================================== -->
-        <!-- VIDEO & OVERLAYS (Must be inside section)  -->
-        <!-- ========================================== -->
-        <video autoplay loop muted playsinline class="hero-bg-video">
+        <video autoplay loop muted playsinline class="site-bg-video">
             <source src="assets/Video/umakvid.mp4" type="video/mp4">
         </video>
 
@@ -40,18 +23,65 @@
         <div class="video-fade-overlay"></div>
 
 
+
+     <!-- Header Navigation -->
+    
+     <header class="sticky-nav">
+        <div class="header-container">
+            <div class="logo-wrapper">
+                <img src="assets/images/UMak Logo Registered.png" alt="UMak Logo" class="logo-image" style="width: 36px; height: 36px;">
+                <div class="logo-text">
+                    <span class="logo-title">UNIVERSITY OF MAKATI</span>
+                    <span class="logo-subtitle">AI ASSISTANT</span>
+                </div>
+            </div>
+
+             <div class="nav-right">
+
+            <nav class="nav-links">
+                <a href="#hero-section">Home</a>
+                <a href="#split-section">Challenges</a>
+                <a href="#solutions-section">Solutions</a>
+                <a href="#comparison">Comparison</a>
+                <a href="#how-it-works-section">How It Works</a>
+            </nav>
+            
+            <a href="chatbot.html" class="btn-primary"> Meet your AI  -></a>
+            
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Menu">
+        <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+
+            </div>
+
+        </div>
+    </header>    
+
+
+    <div class="page-encasement">
+
+        
+  
+    <!-- 1. Hero Section -->
+    <section class="hero-section" id="hero-section">
+    
         <!-- ========================================== -->
         <!-- TEXT CONTENT & BUTTONS                     -->
         <!-- ========================================== -->
         <div class="container hero-content">
             
            <h1 class="animate-drop">
-                <!-- Wrapped in a span to force it to stay on exactly one line -->
+                <!-- NEW: Wrapped in a span to force it to stay on exactly one line -->
                 <span style="white-space: nowrap;">The Future Of Empowering</span> <br> 
                 
                 <span class="dynamic-title-wrapper">
                     <span class="word-window" id="word-window">
                         <span class="word-track" id="word-track">
+                            <!-- "With AI" is now merged, so the entire phrase scrolls up smoothly -->
                             <span class="word text-gradient">Academic Journey With AI</span>
                             <span class="word text-gradient">Campus Navigation With AI</span>
                             <span class="word text-gradient">Student Life With AI</span>
@@ -65,29 +95,42 @@
 
             <p class="animate-drop">Your AI-powered guide for campus navigation, enrollment details, academic schedules, and student services.</p>
             
-            <a href="chatBot.html" class="btn-primary">Meet your AI</a>
+         
             
         </div>
     </section>
 
     <!-- 2. Resolving Challenges Section -->
-    <section class="split-section">
+   <section class="split-section" id="split-section">
         <div class="container">
             <div class="split-content">
-                <div class="split-text">
-                    <h2 class="animate-slide-left">Resolving Decades-Old <br>Campus Challenges In <br>Milliseconds</h2>
-                    <p class="animate-slide-left">Built specifically to eliminate university friction points for students, administrative personnel, and university researchers through automated computational decision-making.</p>
-                </div>
-                <div class="split-image">
-                    <!-- The animated sprite container replaces the static heron-hero-img -->
+                
+                <!-- MASCOT MOVED TO THE LEFT -->
+                <div class="split-image animate-slide-left ">
                     <div class="mascot-sprite-animated"></div>
                 </div>
+
+                <!-- TEXT MOVED TO THE RIGHT & PLACED INSIDE BOXES -->
+                <div class="split-text">
+                    
+                    <!-- Box 1: The Heading -->
+                    <div class="challenge-box animate-slide-left delay-1">
+                        <h2>Resolving Decades-Old <br>Campus Challenges In <br>Milliseconds</h2>
+                    </div>
+                    
+                    <!-- Box 2: The Paragraph -->
+                    <div class="challenge-box animate-slide-left delay-2">
+                        <p>Built specifically to eliminate university friction points for students, administrative personnel, and university researchers through automated computational decision-making.</p>
+                    </div>
+
+                </div>
+
             </div>
         </div>
     </section>
 
-    <!-- 3. What It Solves Section -->
-    <section class="solutions-section">
+ <!-- 3. What It Solves Section -->
+    <section class="solutions-section" id="solutions-section">
         <div class="container">
             <div class="section-header animate-slide-left">
                 <h2>What It Solves?</h2>
@@ -106,9 +149,9 @@
                     <h3>Verified Sources</h3>
                     <p>No outdated or fake info. Every answer is pulled directly from official UMak handbooks with exact source links.</p>
                 </div>
-
-                <!-- Card 3 (With Separate Fingers Grabbing Mascot) -->
+            <!-- Card 3 (With Separate Fingers Grabbing Mascot) -->
                 <div class="single-grab-wrapper animate-drop delay-3">
+                    
                     <!-- Layer 1: Body & Head (Sits BEHIND the card) -->
                     <img src="assets/images/HERONGRAB.png" alt="Heron Body" class="mascot-grab-back">
                     
@@ -119,68 +162,42 @@
                     </div>
 
                     <!-- Layer 3: Separate Fingers (Sits ON TOP of the card) -->
+                    <!-- Make sure the filename matches your saved finger image -->
                     <img src="assets/images/finger5.png" alt="Heron Fingers" class="mascot-fingers-front">
+                    
+                </div>
+                    
                 </div>
             </div>
-        </div>
+      
     </section>
 
     <!-- 4. AI Is The Real Change Section -->
-    <section class="comparison-section">
+    <section class="comparison-section" id="comparison">
         <div class="container">
             <div class="section-header">
-                <h2 class="animate-drop">AI Is <span class="text-yellow">The Real Change</span></h2>
-                <p class="animate-drop">One question replaces a walk across campus.</p>
+                <h2 class="animate-drop" >AI Is <span class="text-yellow">The Real Change</span> </h2>
+                <p class="animate-drop" >One question replaces a walk across campus.</p>
             </div>
             <div class="comparison-box">
                 <div class="comparison-half dark-bg">
-                    <div class="step-card animate-drop delay-1">
-                        <h3 class="animate-drop">Without the assistant</h3>
-                        <ul class="custom-icon-list">
-                            <li>
-                                <span class="list-icon">
-                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/></svg>
-                                </span>
-                                <span>Check several information posts</span>
-                            </li>
-                            <li>
-                                <span class="list-icon">
-                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-                                </span>
-                                <span>Line up at the office to ask</span>
-                            </li>
-                            <li>
-                                <span class="list-icon">
-                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 6h-2v9H6v2c0 1.1.9 2 2 2h11l4 4V8c0-1.1-.9-2-2-2zm-4 2V4c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v14l4-4h10c1.1 0 2-.9 2-2z"/></svg>
-                                </span>
-                                <span>Get different answers from different people</span>
-                            </li>
-                        </ul>
+                     <div class="step-card animate-drop delay-1">
+                    <h3 class="animate-drop">Without the assistant</h3>
+                    <ul>
+                        <li>Check several information posts</li>
+                        <li>Line up at the office to ask</li>
+                        <li>Get different answers from different people</li>
+                    </ul>
                     </div>
                 </div>
                 <div class="comparison-half yellow-bg">
-                    <div class="step-card animate-drop delay-2">
-                        <h3 class="animate-drop">With the assistant</h3>
-                        <ul class="custom-icon-list">
-                            <li>
-                                <span class="list-icon">
-                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
-                                </span>
-                                <span>Ask in plain language, any time</span>
-                            </li>
-                            <li>
-                                <span class="list-icon">
-                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-10 14H5v-2h5v2zm0-4H5v-2h5v2zm0-4H5V7h5v2zm9.7 2.12l-5.66 5.66L10.5 13.2l1.41-1.41 2.12 2.12 4.24-4.24 1.43 1.45z"/></svg>
-                                </span>
-                                <span>Get the answer and the document it came from</span>
-                            </li>
-                            <li>
-                                <span class="list-icon">
-                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-                                </span>
-                                <span>Told plainly when the sources don't cover it</span>
-                            </li>
-                        </ul>
+                     <div class="step-card animate-drop delay-2">
+                    <h3 class="animate-drop">With the assistant</h3>
+                    <ul>
+                        <li>Ask in plain language, any time</li>
+                        <li>Get the answer and the document it came from</li>
+                        <li>Told plainly when the sources don't cover it</li>
+                    </ul>
                     </div>
                 </div>
             </div>
@@ -188,31 +205,36 @@
     </section>
 
     <!-- 5. How It Works Section -->
-    <section class="how-it-works-section">
-        <div class="container">
-            <div class="section-header animate-drop">
-                <h2>How It Works</h2>
-                <p>From question to answer in three steps.</p>
+    <section class="how-it-works-section" id="how-it-works-section">
+    <div class="container">
+        <div class="section-header animate-drop">
+            <h2>How It Works</h2>
+            <p>From question to answer in three steps.</p>
+        </div>
+        <div class="grid-3">
+            <!-- Step 1 gets the first delay -->
+            <div class="step-card animate-drop delay-1">
+                <div class="step-number">1</div>
+                <h3>Ask</h3>
+                <p>Type a question about enrollment, schedules, or services.</p>
             </div>
-            <div class="grid-3">
-                <div class="step-card animate-drop delay-1">
-                    <div class="step-number">1</div>
-                    <h3>Ask</h3>
-                    <p>Type a question about enrollment, schedules, or services.</p>
-                </div>
-                <div class="step-card animate-drop delay-2">
-                    <div class="step-number">2</div>
-                    <h3>Search the sources</h3>
-                    <p>The assistant looks only through the provided university documents.</p>
-                </div>
-                <div class="step-card animate-drop delay-3">
-                    <div class="step-number">3</div>
-                    <h3>Answer with a source</h3>
-                    <p>You get a direct answer and the document it came from, or a clear "Not found".</p>
-                </div>
+            
+            <!-- Step 2 waits a little longer -->
+            <div class="step-card animate-drop delay-2">
+                <div class="step-number">2</div>
+                <h3>Search the sources</h3>
+                <p>The assistant looks only through the provided university documents.</p>
+            </div>
+            
+            <!-- Step 3 waits the longest -->
+            <div class="step-card animate-drop delay-3">
+                <div class="step-number">3</div>
+                <h3>Answer with a source</h3>
+                <p>You get a direct answer and the document it came from, or a clear "Not found".</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- 6. Call To Action (Start Experiencing It) -->
     <section class="cta-section" id="cta-section">
@@ -235,9 +257,11 @@
 
     <!-- 7. Footer Section -->
     <footer class="site-footer">
+        <!-- Background image area with ABOUT US text -->
         <div class="footer-banner">
             <h2>ABOUT US</h2>
         </div>
+        <!-- Bottom credits area -->
         <div class="footer-credits">
             <div class="container">
                 <h4>UMak AI Assistant</h4>
@@ -248,101 +272,120 @@
         </div>
     </footer>
 
+    </div>
+
     <script>
+        // Set up the observer
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
+                // If the element is visible on the screen
                 if (entry.isIntersecting) {
+                    // Add the 'show' class to trigger the CSS animation
                     entry.target.classList.add('show');
+                    
+                    // Stop watching the element so it doesn't re-animate every time you scroll up and down
                     observer.unobserve(entry.target); 
                 }
             });
         });
 
+      // UPDATED: Now it looks for BOTH animation classes!
         const hiddenElements = document.querySelectorAll('.animate-drop, .animate-slide-left');
         hiddenElements.forEach((el) => observer.observe(el));
     </script>
 
-    <!-- Symmetrical Auto-Adjusting Carousel Script -->
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const wordTrack = document.getElementById('word-track');
-            const words = wordTrack.querySelectorAll('.word');
-            
-            let currentIndex = 0;
-            const totalWords = words.length;
+   <!-- SYMMETRICAL AUTO-ADJUSTING CAROUSEL SCRIPT -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const wordTrack = document.getElementById('word-track');
+        const words = wordTrack.querySelectorAll('.word');
+        
+        let currentIndex = 0;
+        const totalWords = words.length;
 
-            const animDuration = '0.8s';
-            const smoothCurve = 'cubic-bezier(0.25, 1, 0.5, 1)';
+        // Animation Settings
+        const animDuration = '0.8s';
+        const smoothCurve = 'cubic-bezier(0.25, 1, 0.5, 1)'; 
+
+       setInterval(() => {
+            currentIndex++;
+
+            // THE FIX: Dynamically calculate the exact pixel height of the word.
+            // This guarantees the math is always 100% perfect and never shows two words at once!
+           const wordHeight = words[0].offsetHeight;
+
+            // Uses the pixel height to slide perfectly
+            wordTrack.style.transition = `transform ${animDuration} ${smoothCurve}`;
+            wordTrack.style.transform = `translateY(-${currentIndex * wordHeight}px)`;
+
+          
+
+            // Invisible seamless reset loop
+            if (currentIndex === totalWords - 1) {
+                setTimeout(() => {
+                    wordTrack.style.transition = 'none';
+                    currentIndex = 0;
+                    wordTrack.style.transform = `translateY(0)`;
+                    void wordTrack.offsetHeight; // Force reflow reset
+                }, 850); 
+            }
+        }, 3500);
+    });
+</script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const ctaHeading = document.getElementById("typing-cta-heading");
+        if (!ctaHeading) return;
+
+        const baseText = "Start Experiencing It";
+        let hasAnimated = false;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !hasAnimated) {
+                    hasAnimated = true;
+                    startTypingAndLoopDots(ctaHeading, baseText);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        observer.observe(document.getElementById("cta-section"));
+
+        function startTypingAndLoopDots(element, text) {
+            element.textContent = "";
+            element.classList.add("typing-cursor");
+            let charIndex = 0;
+
+            // Step 1: Type out "Start Experiencing It" character by character
+            function typeWriter() {
+                if (charIndex < text.length) {
+                    element.textContent += text.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeWriter, 80); // Speed of typing per character
+                } else {
+                    // Step 2: Once finished typing, begin the dot cycling loop
+                    setTimeout(startDotLoop, 400);
+                }
+            }
+
+            typeWriter();
+        }
+
+        function startDotLoop() {
+            const dotsArray = ["",".", "..", "..."];
+            let dotIndex = 0;
+            const baseText = "Start Experiencing It";
 
             setInterval(() => {
-                currentIndex++;
-                
-                const wordHeight = words[0].offsetHeight;
+                ctaHeading.textContent = baseText + dotsArray[dotIndex];
+                dotIndex = (dotIndex + 1) % dotsArray.length;
+            }, 500); // Speed at which the dots switch (. -> .. -> ...)
+        }
+    });
+</script>
 
-                wordTrack.style.transition = `transform ${animDuration} ${smoothCurve}`;
-                wordTrack.style.transform = `translateY(-${currentIndex * wordHeight}px)`;
 
-                if (currentIndex === totalWords - 1) {
-                    setTimeout(() => {
-                        wordTrack.style.transition = 'none';
-                        currentIndex = 0;
-                        wordTrack.style.transform = `translateY(0)`;
-                        void wordTrack.offsetHeight; 
-                    }, 850); 
-                }
-            }, 3500);
-        });
-    </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const ctaHeading = document.getElementById("typing-cta-heading");
-            if (!ctaHeading) return;
-
-            const baseText = "Start Experiencing It";
-            let hasAnimated = false;
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && !hasAnimated) {
-                        hasAnimated = true;
-                        startTypingAndLoopDots(ctaHeading, baseText);
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.5 });
-
-            observer.observe(document.getElementById("cta-section"));
-
-            function startTypingAndLoopDots(element, text) {
-                element.textContent = "";
-                element.classList.add("typing-cursor");
-                let charIndex = 0;
-
-                function typeWriter() {
-                    if (charIndex < text.length) {
-                        element.textContent += text.charAt(charIndex);
-                        charIndex++;
-                        setTimeout(typeWriter, 80);
-                    } else {
-                        setTimeout(startDotLoop, 400);
-                    }
-                }
-
-                typeWriter();
-            }
-
-            function startDotLoop() {
-                const dotsArray = ["",".", "..", "..."];
-                let dotIndex = 0;
-                const baseText = "Start Experiencing It";
-
-                setInterval(() => {
-                    ctaHeading.textContent = baseText + dotsArray[dotIndex];
-                    dotIndex = (dotIndex + 1) % dotsArray.length;
-                }, 500);
-            }
-        });
-    </script>
 </body>
 </html>
