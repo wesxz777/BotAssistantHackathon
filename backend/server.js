@@ -45,11 +45,11 @@ const groq = new Groq({
   apiKey: cleanApiKey,
 });
 
-// 1. Load and split university knowledge base documents from sourcesBot
+// 1. Load and split university knowledge base documents from sourcesBOT
 const knowledgeChunks = [];
 const chunksBySource = new Map();
 const sourceDocuments = new Map();
-const sourcesDirectory = path.join(__dirname, 'sourcesBot');
+const sourcesDirectory = path.join(__dirname, 'sourcesBOT');
 
 if (fs.existsSync(sourcesDirectory)) {
   const sourceFiles = fs.readdirSync(sourcesDirectory)
@@ -58,7 +58,7 @@ if (fs.existsSync(sourcesDirectory)) {
 
   for (const fileName of sourceFiles) {
     const filePath = path.join(sourcesDirectory, fileName);
-    console.log(`Loaded university context from: sourcesBot/${fileName}`);
+    console.log(`Loaded university context from: sourcesBOT/${fileName}`);
 
     const rawText = fs.readFileSync(filePath, 'utf-8');
     sourceDocuments.set(fileName, rawText);
