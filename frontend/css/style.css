@@ -21,7 +21,7 @@ body {
    NEW: Page Encasement Wrapper
    ========================================= */
 .page-encasement {
-    max-width: 1345px; /* Adjust this to make the box wider or narrower */
+    max-width: 1425px; /* Adjust this to make the box wider or narrower */
     width: 100%;
     margin: 0 auto;
     min-height: 100vh;
@@ -388,66 +388,56 @@ img.heron-hero-img {
     max-width: 800px;
 }
 
-/* 3-Column Grid */
+/* --- Minimalistic Line-Based Target Strip --- */
 .arch-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 40px; 
+  margin-top: 40px;
 }
 
-/* Matching Solid Dark Card (Identical theme to your solutions-section cards) */
 .arch-col {
-    background-color: #0b254d;
-    padding: 28px 24px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-top: 3px solid #facc15;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  flex: 1;
+  background: transparent; 
+  padding: 24px 0 0 0; 
+  border: none; 
+  border-radius: 0; 
+  border-top: 1px solid rgba(255, 255, 255, 0.2); 
+  transition: border-color 0.3s ease; 
 }
 
-/* Smooth Hover Lift */
 .arch-col:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+  border-top-color: #fbbf24;
 }
 
-/* Clean, Unhighlighted Numbers */
 .arch-num {
-    display: inline-block;
-    color: #facc15;
-    font-size: 0.95rem;
-    font-weight: 800;
-    letter-spacing: 1px;
-    margin-bottom: 14px;
-    background: transparent;
-    padding: 0;
-    border: none;
+  display: block;
+  color: #fbbf24; 
+  font-family: monospace; 
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 12px;
 }
 
 .arch-col h4 {
-    color: #ffffff;
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin: 0 0 10px 0;
+  color: #ffffff; 
+  font-size: 1.2rem;
+  margin: 0 0 8px 0;
+  font-weight: 600;
 }
 
 .arch-col p {
-    color: #cbd5e1;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    margin: 0;
+  color: #94a3b8; 
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
 }
 
-/* Mobile Responsiveness */
 @media (max-width: 992px) {
-    .arch-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
-    }
+  .arch-grid {
+    flex-direction: column;
+    gap: 30px;
+  }
 }
 
 /* =========================================
@@ -648,75 +638,38 @@ img.heron-hero-img {
 }
 
 /* =========================================
-   6. How It Works Section
+   Horizontal Carousel (Absolute Alignment Rewrite)
    ========================================= */
 .how-it-works-section {
-    padding: 160px 0;
-    /* background-color: #051329;  */
-}
-
-.step-card {
-    padding-top: 20px;
-    border-top: 2px solid #facc15;
-    position: relative;
-}
-
-.step-number {
-    width: 35px;
-    height: 35px;
-    background-color: #facc15;
-    color: #051329;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    margin-bottom: 20px;
-}
-
-.step-card h3 {
-    font-size: 1.3rem;
-    margin-bottom: 15px;
-}
-
-.step-card p {
-    color: #94a3b8;
-    font-size: 0.95rem;
-}
-
-/* =========================================
-   Horizontal Carousel (How It Works)
-   ========================================= */
-.how-it-works-section {
-    padding: 120px 0; 
-    width: 100%;
+    width: 100vw;
+    max-width: 100%;
+    padding: 120px 0;
     overflow: hidden; 
-    
-    /* Apply the new sleek font */
     font-family: 'Plus Jakarta Sans', sans-serif; 
+    
+    /* Forces everything inside this section to perfectly center align */
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
 }
 
 .carousel-wrapper {
-    width: 100%; 
-    position: relative;
+    width: 100%;
 }
 
 .carousel-track {
     display: flex;
-    gap: 4px; /* REDUCED GAP for tighter spacing */
+    gap: 20px; 
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    
-    padding: 20px 12%; 
+    padding: 20px 0; 
     scrollbar-width: none;
     -ms-overflow-style: none;
     cursor: grab;
-    
     overscroll-behavior-x: contain; 
     user-select: none;
-    -webkit-user-select: none;
 }
 
 .carousel-track::-webkit-scrollbar {
@@ -727,21 +680,31 @@ img.heron-hero-img {
     cursor: grabbing;
 }
 
+/* THE MATH BUMPERS: Physically injects exactly 50% of the screen minus half of the card. 
+   This guarantees the first and last cards dead-center themselves regardless of padding bugs. */
+.carousel-track::before,
+.carousel-track::after {
+    content: '';
+    flex: 0 0 calc(50vw - (min(76vw, 900px) / 2)); 
+}
+
+/* STRICT CARD SIZING */
 /* MINIMALISTIC TALL CARDS */
 .carousel-card {
     flex: 0 0 76%; 
     max-width: 900px; 
-    min-height: 520px; /* INCREASED HEIGHT */
+    min-height: 520px;
     scroll-snap-align: center; 
     scroll-snap-stop: always; 
     
-    /* Sleek gradient background instead of flat color */
-    background: linear-gradient(180deg, rgba(16, 28, 54, 0.4) 0%, rgba(8, 18, 38, 0.7) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.03); /* Extremely subtle border */
-    border-radius: 24px; /* Larger, softer corners for modern app feel */
-    padding: 60px; 
+    display: flex;
+    flex-direction: column;
     
-    /* Smoother, bouncier transition curve */
+    background: linear-gradient(180deg, rgba(16, 28, 54, 0.4) 0%, rgba(8, 18, 38, 0.7) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 24px;
+    padding: 36px 48px; 
+    
     transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
     
     opacity: 0.5;
@@ -754,11 +717,17 @@ img.heron-hero-img {
     transform: scale(1);
     background: linear-gradient(180deg, rgba(16, 32, 64, 0.85) 0%, rgba(10, 20, 42, 0.95) 100%);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    /* Soft ambient drop shadow + sharp inner highlight line */
-    box-shadow: 0 15x 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
 }
 
-/* Polished Card Typography & Badges (Smaller Text) */
+/* Places "1" and "Ask" side-by-side */
+.step-header-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+}
+
 .carousel-card .step-number {
     width: 32px;
     height: 32px;
@@ -770,51 +739,58 @@ img.heron-hero-img {
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    margin-bottom: 24px;
+    margin-bottom: 0; /* Removed the 24px bottom margin so it aligns with h3 */
+    flex-shrink: 0;
     box-shadow: 0 4px 12px rgba(250, 204, 21, 0.3);
 }
 
 .carousel-card h3 {
-    font-size: 1.5rem; /* Reduced from 1.75rem */
+    font-size: 1.5rem;
     font-weight: 600;
     letter-spacing: -0.02em; 
-    margin-bottom: 12px; /* Slightly tighter margin */
+    margin-bottom: 0; /* Removed bottom margin so it centers next to the number */
     color: #ffffff;
 }
 
 .carousel-card p {
-    font-size: 1rem; /* Reduced from 1.1rem */
+    font-size: 1rem;
     color: #94a3b8;
     line-height: 1.6;
     font-weight: 400;
-    max-width: 100%; /* Ensures text never passes the box */
+    max-width: 100%;
+    margin-bottom: 18px;
     word-wrap: break-word;
 }
 
+/* Shows the full uncropped image fitted inside the card */
+.step-box-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 340px;
+    object-fit: contain;
+    margin-top: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    pointer-events: none;
+}
+
 /* =========================================
-   Bottom Layout (Strictly Gridded to Card Edges)
+   Bottom Layout (Flawless Pixel Sync)
    ========================================= */
 .how-it-works-bottom {
+    /* Uses the EXACT same math function as the card, ensuring a 1:1 pixel match */
+    width: min(76vw, 900px); 
+    
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
-    /* THE STRICT GRID FIX: 
-       This perfectly mimics the carousel-card's exact width (76%) 
-       and limit (900px) so they are physically identical in size */
-    width: 76%; 
-    max-width: 700px; 
-    
-    /* Forces it dead-center, directly under the active card */
-    margin: 40px auto 0 auto; 
-    padding: 0; 
-    box-sizing: border-box;
+    margin-top: 40px; 
 }
 
 .how-it-works-bottom .section-header {
     text-align: left;
-    margin-bottom: 0;
-    padding: 0; 
+    margin: 0;
 }
 
 .how-it-works-bottom h2 {
@@ -832,8 +808,6 @@ img.heron-hero-img {
 
 .carousel-pagination {
     display: flex;
-    justify-content: center;
-    align-items: center;
     gap: 8px;
 }
 
@@ -853,11 +827,22 @@ img.heron-hero-img {
     box-shadow: 0 0 10px rgba(250, 204, 21, 0.2);
 }
 
-/* Mobile Fixes */
+/* =========================================
+   Mobile Adjustments
+   ========================================= */
 @media (max-width: 768px) {
+    /* Switch math from 76vw to 85vw on small screens */
+    .carousel-track::before,
+    .carousel-track::after {
+        flex: 0 0 calc(50vw - (min(85vw, 900px) / 2)); 
+    }
+    .carousel-card {
+        flex: 0 0 min(85vw, 900px);
+        min-height: 400px;
+        padding: 40px 30px;
+    }
     .how-it-works-bottom {
-        /* Matches the exact 85% width of the mobile card */
-        width: 85%; 
+        width: min(85vw, 900px); 
         flex-direction: column;
         text-align: center;
         gap: 20px;
@@ -2272,26 +2257,4 @@ body::-webkit-scrollbar {
 @keyframes eq-bounce {
     0%, 100% { transform: scaleY(0.4); opacity: 0.5; }
     50% { transform: scaleY(1); opacity: 1; }
-}
-.carousel-card {
-    display: flex;
-    flex-direction: column;
-}
-
-.step-box-img {
-    display: block;
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    object-position: center;
-    margin-top: 24px;
-    border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    pointer-events: none;
-}
-
-@media (max-width: 768px) {
-    .step-box-img {
-        height: 170px;
-    }
 }
