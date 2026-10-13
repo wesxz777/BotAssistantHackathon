@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMak AI Assistant</title>
+    
+    <!-- Properly links to your CSS folder -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- FontAwesome for the loading spinner used in chat.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body class="umak-body">
+    
+    <header>
+        <a href="index.html" class="logo-link">
+            <div class="logo-container">
+                <img src="assets/images/UMak Logo Registered.png" alt="University of Makati Logo" class="logo">
+                <div class="header-text">
+                    <span class="uni-name">UNIVERSITY OF MAKATI</span>
+                    <span class="ai-text">AI ASSISTANT</span>
+                </div>
+            </div>
+        </a>
+    </header>
+
+    <!-- Scrollable content wrapper for the chat view -->
+    <main class="umak-container" id="chat-content-wrapper" style="overflow-y: auto; max-height: calc(100vh - 180px); padding-bottom: 2rem;">
+        
+        <!-- Greeting screen (hidden once chat starts) -->
+        <div class="hero" id="greeting-container">
+            <h1>Good day, <span class="highlight" id="typing-name"></span><span id="exclamation-mark" style="opacity: 0;">!</span></h1>
+            <p>What can I help you find across the University of Makati today?</p>
+        </div>
+
+        <!-- Suggestion chips (hidden once chat starts) -->
+        <div class="grid-buttons" id="suggestion-chips">
+            <button class="action-btn chip" data-query="Check enrollment schedule">Check enrollment schedule</button>
+            <button class="action-btn chip" data-query="UMak CCIS building navigation">UMak CCIS building navigation</button>
+            <button class="action-btn chip" data-query="Graduation credentials checklist">Graduation credentials checklist</button>
+            <button class="action-btn chip" data-query="Library hours & reservations">Library hours & reservations</button>
+        </div>
+
+        <!-- Container where user & bot chat bubbles will be appended -->
+        <div id="chat-messages-container" style="display: flex; flex-direction: column; width: 100%; max-width: 800px; margin: 0 auto;"></div>
+
+    </main>
+
+    <!-- Floating Search / Input Bar -->
+    <footer>
+        <div class="search-container">
+            <input 
+                type="text" 
+                id="chat-input" 
+                placeholder="Ask anything about schedules, offices, or enrollment..." 
+                class="search-input"
+                autocomplete="off"
+            >
+            <button class="submit-btn" id="send-btn" aria-label="Submit search">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="16" cy="16" r="16" fill="white"/>
+                    <path d="M16 9L21.5 15.5H17.5V23H14.5V15.5H10.5L16 9Z" fill="#070E20"/>
+                </svg>
+            </button>
+        </div>
+    </footer>
+
+    <!-- Link your chat script -->
+    <script src="js/chat.js"></script>
+
+    <!-- Upgraded Typing Animation Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const nameSpan = document.getElementById("typing-name");
+            const exclamation = document.getElementById("exclamation-mark");
+            const textToType = "Heron";
+            let charIndex = 0;
+
+            // Wait 800ms for the page slide-up animation to finish, then start typing
+            setTimeout(() => {
+                // Add the typing cursor effect
+                nameSpan.classList.add("typing-cursor");
+
+                const typingInterval = setInterval(() => {
+                    if (charIndex < textToType.length) {
+                        nameSpan.textContent += textToType.charAt(charIndex);
+                        charIndex++;
+                    } else {
+                        // Word is finished
+                        clearInterval(typingInterval); 
+                        
+                        // Remove the typing cursor line
+                        nameSpan.classList.remove("typing-cursor");
+                        
+                        // Strip the inline opacity so the animation can run freely
+                        exclamation.style.opacity = "";
+                        
+                        // Start the appearing/disappearing animation on the exclamation mark
+                        exclamation.classList.add("blinking-exclamation");
+                    }
+                }, 120); // 120ms is the sweet spot for smooth, premium typing
+            }, 800); 
+        });
+    </script>
+</body>
+</html>
