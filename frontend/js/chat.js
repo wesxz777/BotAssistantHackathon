@@ -1,26 +1,21 @@
 /**
  * UMak AI Assistant - Complete Frontend Chat Controller
- * Captures user queries, communicates with the Express Gemini backend,
+ * Captures user queries, communicates with the Express backend,
  * and dynamically renders user, loading, and bot message bubbles.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-   // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // 1. DOM Element References
     // -------------------------------------------------------------------------
     const chatInput = document.getElementById('chat-input');
     const sendBtn = document.getElementById('send-btn');
     const messagesContainer = document.getElementById('chat-messages-container');
-    const contentWrapper = document.getElementById('chat-content-wrapper'); // Actual scrollable container
+    const contentWrapper = document.getElementById('chat-content-wrapper');
     const greetingContainer = document.getElementById('greeting-container');
     const suggestionChipsContainer = document.getElementById('suggestion-chips');
     const chips = document.querySelectorAll('.chip');
 
-   // Dynamic Backend URL resolution:
-    // If testing on localhost/127.0.0.1, it sends to port 5000.
-    // If in GitHub Codespaces preview, it replaces the port token in the URL.
-    // Dynamic Backend URL resolution:
-    // Handles 127.0.0.1/localhost AND any dynamic Codespaces port (5500, 5501, 8000, etc.)
     const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
     const BACKEND_URL = isLocalhost
@@ -34,10 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let conversationHistory = [];
     const MAX_CONVERSATION_MESSAGES = 12;
 
-    // Timer tracker for the dynamic loading status
     let loadingStatusInterval = null;
 
-    // Dynamic stages to cycle through while awaiting the backend
     const LOADING_STAGES = [
         'Checking official campus documents...',
         'Searching university records...',
@@ -71,16 +64,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Scrolls the true overflow container to the bottom
     function scrollToBottom() {
         if (contentWrapper) {
-            // Smoothly move the scroll container to its maximum height
             contentWrapper.scrollTo({
                 top: contentWrapper.scrollHeight,
                 behavior: 'smooth'
             });
         }
     }
+
     // -------------------------------------------------------------------------
     // 3. Message Bubble Rendering Functions
     // -------------------------------------------------------------------------
@@ -107,15 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         messageRow.appendChild(bubble);
-     messagesContainer.appendChild(messageRow);
-
-    // Keep scrolling inside the chat panel so the conversation can move upward freely.
-    scrollToBottom();
+        messagesContainer.appendChild(messageRow);
+        scrollToBottom();
     }
 
-    // Dynamic Loading Bubble with cycling status texts
     function showLoadingBubble() {
-        // Clear any lingering interval before starting a new one
         if (loadingStatusInterval) {
             clearInterval(loadingStatusInterval);
             loadingStatusInterval = null;
@@ -139,11 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.25);
         `;
 
-        // Spinner icon
         const icon = document.createElement('i');
         icon.className = 'fa-solid fa-circle-notch fa-spin';
 
-        // Animated status text
         const textSpan = document.createElement('span');
         textSpan.id = 'loading-status-text';
         textSpan.style.cssText = 'transition: opacity 0.2s ease;';
@@ -156,7 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         scrollToBottom();
 
-        // Cycle through status messages every 1.3 seconds
         let stageIndex = 0;
         loadingStatusInterval = setInterval(() => {
             stageIndex = (stageIndex + 1) % LOADING_STAGES.length;
@@ -168,7 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1300);
     }
 
-    // Stops the timer and removes the loading bubble
     function removeLoadingBubble() {
         if (loadingStatusInterval) {
             clearInterval(loadingStatusInterval);
@@ -178,98 +162,182 @@ document.addEventListener('DOMContentLoaded', () => {
         if (loader) loader.remove();
     }
 
-        function cleanAssistantText(text) {
-                return text
-                        // Convert keycap emoji numbers such as 1️⃣ back to ordinary numbers.
-                        .replace(/([0-9#*])\uFE0F?\u20E3/gu, '$1')
-                        // Remove remaining emoji characters from assistant output.
-                        .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, '')
-                        // Remove Markdown horizontal rules and excess blank lines.
-                        .replace(/^\s*(?:[-*_]\s*){3,}$/gm, '')
-                        .replace(/\n{3,}/g, '\n\n')
-                        .trim();
+    function cleanAssistantText(text) {
+        return text
+            .replace(/([0-9#*])\uFE0F?\u20E3/gu, '$1')
+            .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, '')
+            .replace(/^\s*(?:[-*_]\s*){3,}$/gm, '')
+            .replace(/\n{3,}/g, '\n\n')
+            .trim();
+    }
+
+    // Applies bold/italic formatting within a single line of text
+    function applyInlineFormatting(line) {
+        return line
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/(^|[^*])\*(?!\*)(.*?)\*/g, '$1<em>$2</em>');
+    }
+
+    // Checks if a line looks like a Markdown table row: | cell | cell |
+    function isTableRow(line) {
+        return /^\|.*\|$/.test(line.trim());
+    }
+
+    // Checks if a line is a table separator row like |---|---|
+    function isTableSeparator(line) {
+        return /^\|?\s*:?-+:?\s*(\|\s*:?-+:?\s*)+\|?$/.test(line.trim());
+    }
+
+    // Converts a block of consecutive "| cell | cell |" lines into an HTML table
+    function renderTable(rows) {
+        const parseRow = (row) => row.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map((cell) => cell.trim());
+
+        const headerCells = parseRow(rows[0]);
+        const bodyRows = rows.slice(2); // skip header + separator
+
+        let html = '<table><thead><tr>';
+        headerCells.forEach((cell) => {
+            html += `<th>${applyInlineFormatting(cell)}</th>`;
+        });
+        html += '</tr></thead><tbody>';
+
+        bodyRows.forEach((row) => {
+            const cells = parseRow(row);
+            html += '<tr>';
+            cells.forEach((cell) => {
+                html += `<td>${applyInlineFormatting(cell)}</td>`;
+            });
+            html += '</tr>';
+        });
+        html += '</tbody></table>';
+
+        return html;
+    }
+
+    // Converts the assistant's Markdown-ish answer into HTML.
+    // Uses marked.js if it loaded successfully; otherwise falls back to a
+    // small built-in parser that handles bold text, bullet lists, and
+    // simple Markdown tables.
+    function formatMarkdown(text) {
+        if (!text) return '';
+        text = cleanAssistantText(text);
+
+        if (typeof marked !== 'undefined' && typeof marked.parse === 'function') {
+            return marked.parse(text);
         }
 
-        // Helper to convert Markdown (bold, bullets, newlines) into HTML
-function formatMarkdown(text) {
-  if (!text) return '';
-    text = cleanAssistantText(text);
+        // Force a line break before every " - " bullet marker, whether or not
+        // the model already used a real newline.
+        text = text.replace(/\s+-\s+(?=\S)/g, '\n- ');
 
-  // 1. If marked.js CDN is loaded in chatBot.html, let it handle full markdown
-  if (typeof marked !== 'undefined' && typeof marked.parse === 'function') {
-    return marked.parse(text);
-  }
+        let escaped = text
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
 
-  // 2. Built-in zero-dependency fallback parser
-  let html = text
-    // Escape basic HTML characters to keep it secure
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    // Convert bold: **text** -> <strong>text</strong>
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    // Convert italic: *text* -> <em>text</em>
-    .replace(/(^|[^*])\*(?!\*)(.*?)\*/g, '$1<em>$2</em>')
-    // Convert bullet points: "- item" or "* item" into bulleted rows
-    .replace(/(?:^|\n)[-*]\s+(.+)/g, '<div style="margin-left: 1rem; text-indent: -0.75rem;">• $1</div>')
-    // Convert newlines into line breaks
-    .replace(/\n/g, '<br>');
+        const lines = escaped.split('\n').map((l) => l.trim()).filter(Boolean);
 
-  return html;
-}
+        let html = '';
+        let listBuffer = [];
+        let tableBuffer = [];
+
+        function flushList() {
+            if (listBuffer.length) {
+                const items = listBuffer.map((item) => `<li>${applyInlineFormatting(item)}</li>`).join('');
+                html += `<ul style="margin: 0.5rem 0; padding-left: 1.25rem;">${items}</ul>`;
+                listBuffer = [];
+            }
+        }
+
+        function flushTable() {
+            if (tableBuffer.length >= 2 && isTableSeparator(tableBuffer[1])) {
+                html += renderTable(tableBuffer);
+            } else if (tableBuffer.length) {
+                // Not a real table (no separator row) — just show as paragraphs
+                tableBuffer.forEach((row) => {
+                    html += `<p style="margin: 0.5rem 0;">${applyInlineFormatting(row)}</p>`;
+                });
+            }
+            tableBuffer = [];
+        }
+
+        for (const line of lines) {
+            if (isTableRow(line)) {
+                flushList();
+                tableBuffer.push(line);
+                continue;
+            }
+            flushTable();
+
+            if (/^[-*]\s+/.test(line)) {
+                listBuffer.push(line.replace(/^[-*]\s+/, ''));
+            } else {
+                flushList();
+                html += `<p style="margin: 0.5rem 0;">${applyInlineFormatting(line)}</p>`;
+            }
+        }
+        flushList();
+        flushTable();
+
+        return html;
+    }
 
     // AI assistant response bubble
     function appendBotMessage(answerText, isError = false) {
-    removeLoadingBubble();
+        removeLoadingBubble();
 
-    const messageRow = document.createElement('div');
-    messageRow.className = 'chat-message-row bot-row';
-    messageRow.style.cssText = 'display: flex; justify-content: flex-start; margin-bottom: 1.25rem; width: 100%;';
+        const messageRow = document.createElement('div');
+        messageRow.className = 'chat-message-row bot-row';
+        messageRow.style.cssText = 'display: flex; justify-content: flex-start; margin-bottom: 1.25rem; width: 100%;';
 
-    const bubble = document.createElement('div');
-    bubble.className = 'chat-bubble bot-bubble';
-    bubble.style.cssText = `
-        background-color: ${isError ? '#450a0a' : '#0d1e3a'};
-        color: ${isError ? '#fca5a5' : '#e2e8f0'};
-        border: 1px solid ${isError ? '#991b1b' : '#1e3a8a'};
-        padding: 1rem 1.25rem;
-        border-radius: 1.25rem 1.25rem 1.25rem 0.25rem;
-        max-width: 78%;
-        font-size: 1rem;
-        line-height: 1.75;
-        word-break: break-word;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-    `;
+        const bubble = document.createElement('div');
+        bubble.className = 'chat-bubble bot-bubble';
+        bubble.style.cssText = `
+            background-color: ${isError ? '#450a0a' : '#0d1e3a'};
+            color: ${isError ? '#fca5a5' : '#e2e8f0'};
+            border: 1px solid ${isError ? '#991b1b' : '#1e3a8a'};
+            padding: 1rem 1.25rem;
+            border-radius: 1.25rem 1.25rem 1.25rem 0.25rem;
+            max-width: 78%;
+            font-size: 1rem;
+            line-height: 1.75;
+            word-break: break-word;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        `;
 
-    // Verification header badge
-    const badge = document.createElement('div');
-    badge.style.cssText = `
-        font-size: 0.75rem;
-        font-weight: 700;
-        color: ${isError ? '#ef4444' : '#34d399'};
-        margin-bottom: 0.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.35rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    `;
+        const badge = document.createElement('div');
+        badge.style.cssText = `
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: ${isError ? '#ef4444' : '#34d399'};
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        `;
+        badge.textContent = isError ? 'Error' : 'UMak Assistant';
 
-    // Optional: keep badge text if your original code had it
-    badge.textContent = isError ? 'Error' : 'UMak Assistant';
+        const body = document.createElement('div');
+        body.style.cssText = 'line-height: 1.75; font-family: inherit;';
 
-    const body = document.createElement('div');
-    body.style.cssText = 'line-height: 1.75; font-family: inherit;';
+        const rawHtml = formatMarkdown(answerText);
 
-    // Apply parsed Markdown formatting here instead of raw textContent
-    body.innerHTML = formatMarkdown(answerText);
+        if (typeof DOMPurify !== 'undefined') {
+            body.innerHTML = DOMPurify.sanitize(rawHtml);
+        } else {
+            // formatMarkdown escapes source text before adding the supported
+            // formatting, so the fallback HTML is safe to render directly.
+            body.innerHTML = rawHtml;
+        }
 
-    bubble.appendChild(badge);
-    bubble.appendChild(body);
-    messageRow.appendChild(bubble);
-    messagesContainer.appendChild(messageRow);
+        bubble.appendChild(badge);
+        bubble.appendChild(body);
+        messageRow.appendChild(bubble);
+        messagesContainer.appendChild(messageRow);
 
-    scrollToBottom();
+        scrollToBottom();
     }
 
     // -------------------------------------------------------------------------
@@ -279,7 +347,6 @@ function formatMarkdown(text) {
         showLoadingBubble();
         toggleInputState(true);
 
-        // Allow 90 seconds for local CPU inference in Codespaces
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 90000);
 
@@ -314,27 +381,36 @@ function formatMarkdown(text) {
         } catch (error) {
             clearTimeout(timeoutId);
             console.error('Fetch error:', error);
-            
-            const message = error.name === 'AbortError'
-                ? 'The request took a little too long to respond. Please try asking again.'
-                : 'Unable to reach the assistant server. Please confirm the backend is running on port 5000.';
-                
+
+            let message;
+            if (error.name === 'AbortError') {
+                message = 'The request took a little too long to respond. Please try asking again.';
+            } else if (error.message && error.message !== 'Failed to fetch') {
+                message = error.message;
+            } else {
+                message = 'Unable to reach the assistant server. Please try again shortly.';
+            }
+
             appendBotMessage(message, true);
         } finally {
             toggleInputState(false);
         }
     }
-    
+
     // -------------------------------------------------------------------------
     // 5. Central Submission Handler
     // -------------------------------------------------------------------------
     function handleUserSubmission(queryText) {
         if (isWaitingForResponse) return;
+        isWaitingForResponse = true;
 
         const text = queryText !== undefined ? queryText : chatInput.value;
         const cleanText = text.trim();
 
-        if (!cleanText) return;
+        if (!cleanText) {
+            isWaitingForResponse = false;
+            return;
+        }
 
         appendUserMessage(cleanText);
         chatInput.value = '';

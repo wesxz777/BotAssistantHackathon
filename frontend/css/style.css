@@ -1,7 +1,7 @@
 /* =========================================
    1. Base & Global Styles
    ========================================= */
-/* {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -253,7 +253,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: -2;
+    z-index: -3;
 }
 
 
@@ -357,6 +357,97 @@ img.heron-hero-img {
     height: auto !important;
 }
 
+/* ========================================================
+   Challenges Section - Matching Theme Architectural Layout
+   ======================================================== */
+.arch-layout {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.arch-title {
+    color: #ffffff;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    letter-spacing: -0.3px;
+}
+
+.arch-highlight {
+    color: #facc15; /* UMak Yellow */
+}
+
+.arch-lead {
+    color: #94a3b8;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    max-width: 800px;
+}
+
+/* 3-Column Grid */
+.arch-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    width: 100%;
+}
+
+/* Matching Solid Dark Card (Identical theme to your solutions-section cards) */
+.arch-col {
+    background-color: #0b254d;
+    padding: 28px 24px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 3px solid #facc15;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Smooth Hover Lift */
+.arch-col:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Clean, Unhighlighted Numbers */
+.arch-num {
+    display: inline-block;
+    color: #facc15;
+    font-size: 0.95rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    background: transparent;
+    padding: 0;
+    border: none;
+}
+
+.arch-col h4 {
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+}
+
+.arch-col p {
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 992px) {
+    .arch-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
 
 /* =========================================
    4. Solutions Section ("What It Solves")
@@ -476,8 +567,8 @@ img.heron-hero-img {
    5. Comparison Section ("AI Is The Real Change")
    ========================================= */
 .comparison-section {
-     padding: 180px 0;
-    /* background: linear-gradient(180deg, #091e42 0%, #0c2652 100%); */
+    padding: 80px 0 40px;
+    background: linear-gradient(180deg, #091e42 0%, #0c2652 100%);
 }
 
 .comparison-box {
@@ -498,21 +589,35 @@ img.heron-hero-img {
     margin-bottom: 20px;
 }
 
-.comparison-half ul {
+.custom-icon-list {
     list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-.comparison-half ul li {
-    margin-bottom: 12px;
+.custom-icon-list li {
+    display: flex;
+    align-items: flex-start; 
+    gap: 15px;               
+    margin-bottom: 20px;
     font-size: 1rem;
-    position: relative;
-    padding-left: 20px;
+    line-height: 1.5;
 }
 
-.comparison-half ul li::before {
-    content: "•";
-    position: absolute;
-    left: 0;
+.list-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;          
+    width: 24px;             
+    height: 24px;
+    margin-top: 2px;         
+}
+
+.list-icon svg {
+    width: 10%;
+    height: 1
+    0%;
 }
 
 .dark-bg {
@@ -522,7 +627,6 @@ img.heron-hero-img {
     border-right: none;
 }
 
-/* Remove top accent line from cards inside comparison box */
 .comparison-box .step-card {
     border-top: none;
     padding-top: 0;
@@ -546,7 +650,7 @@ img.heron-hero-img {
    6. How It Works Section
    ========================================= */
 .how-it-works-section {
-    padding: 180px 0;
+    padding: 160px 0;
     /* background-color: #051329;  */
 }
 
@@ -579,6 +683,183 @@ img.heron-hero-img {
     font-size: 0.95rem;
 }
 
+/* =========================================
+   Horizontal Carousel (How It Works)
+   ========================================= */
+.how-it-works-section {
+    padding: 120px 0; 
+    width: 100%;
+    overflow: hidden; 
+    
+    /* Apply the new sleek font */
+    font-family: 'Plus Jakarta Sans', sans-serif; 
+}
+
+.carousel-wrapper {
+    width: 100%; 
+    position: relative;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 4px; /* REDUCED GAP for tighter spacing */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    
+    padding: 20px 12%; 
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    cursor: grab;
+    
+    overscroll-behavior-x: contain; 
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.carousel-track::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-track.active-drag {
+    cursor: grabbing;
+}
+
+/* MINIMALISTIC TALL CARDS */
+.carousel-card {
+    flex: 0 0 76%; 
+    max-width: 900px; 
+    min-height: 520px; /* INCREASED HEIGHT */
+    scroll-snap-align: center; 
+    scroll-snap-stop: always; 
+    
+    /* Sleek gradient background instead of flat color */
+    background: linear-gradient(180deg, rgba(16, 28, 54, 0.4) 0%, rgba(8, 18, 38, 0.7) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.03); /* Extremely subtle border */
+    border-radius: 24px; /* Larger, softer corners for modern app feel */
+    padding: 60px; 
+    
+    /* Smoother, bouncier transition curve */
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    
+    opacity: 0.5;
+    transform: scale(0.88); 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.carousel-card.active-card {
+    opacity: 1;
+    transform: scale(1);
+    background: linear-gradient(180deg, rgba(16, 32, 64, 0.85) 0%, rgba(10, 20, 42, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    /* Soft ambient drop shadow + sharp inner highlight line */
+    box-shadow: 0 15x 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+/* Polished Card Typography & Badges (Smaller Text) */
+.carousel-card .step-number {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    background-color: #facc15;
+    color: #051329;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(250, 204, 21, 0.3);
+}
+
+.carousel-card h3 {
+    font-size: 1.5rem; /* Reduced from 1.75rem */
+    font-weight: 600;
+    letter-spacing: -0.02em; 
+    margin-bottom: 12px; /* Slightly tighter margin */
+    color: #ffffff;
+}
+
+.carousel-card p {
+    font-size: 1rem; /* Reduced from 1.1rem */
+    color: #94a3b8;
+    line-height: 1.6;
+    font-weight: 400;
+    max-width: 100%; /* Ensures text never passes the box */
+    word-wrap: break-word;
+}
+
+/* =========================================
+   Bottom Layout (Header + Dots Perfectly Gridded to Card)
+   ========================================= */
+.how-it-works-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    /* THE MATH FIX: Give it the exact same width as the active card above it */
+    width: 76%; 
+    max-width: 900px; 
+    
+    /* Center it perfectly on the screen */
+    margin: 40px auto 0 auto; 
+    padding: 0; 
+}
+
+.how-it-works-bottom .section-header {
+    text-align: left;
+}
+
+.how-it-works-bottom h2 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+}
+
+.carousel-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.carousel-pagination .dot {
+    width: 8px;
+    height: 8px;
+    background-color: #334155;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.carousel-pagination .dot.active {
+    width: 24px;
+    background-color: #facc15;
+    border-radius: 4px;
+     box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+/* Mobile Fixes */
+@media (max-width: 768px) {
+    .how-it-works-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+        width: 85%; /* Matches the mobile card width */
+    }
+    .how-it-works-bottom .section-header {
+        text-align: center;
+    }
+    .carousel-card {
+        flex: 0 0 85%; 
+        min-height: 400px;
+        padding: 40px 30px;
+    }
+    .carousel-track {
+        padding: 20px 7.5%; 
+    }
+}
 /* =========================================
    7. CTA Section ("Start Experiencing It")
    ========================================= */
@@ -1382,3 +1663,608 @@ body::-webkit-scrollbar {
         gap: 8px;
     }
 }
+/* ==========================================================================
+   UMak AI Assistant Styles (Seamless Scroll & Minimal Stick Scrollbar)
+   ========================================================================== */
+
+/* Lock the body to exact viewport height so only the chat container scrolls */
+.umak-body {
+    background: radial-gradient(circle at center, #0F1A34 0%, #050914 100%);
+    color: #ffffff;
+    height: 100vh; /* Locks the page height so main and footer meet cleanly */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Header Styling */
+.umak-body header {
+    width: 100%;
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    z-index: 20;
+}
+
+.logo-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+}
+
+.header-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.uni-name {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.ai-text {
+    font-size: 0.65rem;
+    color: #8fa0c5;
+    letter-spacing: 1px;
+}
+
+/* ==========================================================================
+   Seamless Scrollable Chat Container & Fade Mask
+   ========================================================================== */
+.umak-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 920px;
+    
+    /* Extra bottom padding (140px) ensures the last line of text can scroll 
+       all the way up above the floating search bar */
+    padding: 1.5rem 2rem 140px 2rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+
+    /* THE FIX FOR THE HARSH CUTOFF: 
+       Smoothly dissolves the top and bottom edges of the chat feed into transparency */
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 28px,
+        black calc(100% - 120px),
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 28px,
+        black calc(100% - 120px),
+        transparent 100%
+    );
+
+    /* Firefox minimal stick scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(148, 163, 184, 0.25) transparent;
+}
+
+/* Centers the greeting screen vertically when no messages exist yet */
+.hero {
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: 3rem;
+}
+
+#suggestion-chips {
+    margin-bottom: auto;
+}
+
+/* Chat Messages Wrapper */
+#chat-messages-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    gap: 1.25rem;
+}
+
+/* ==========================================================================
+   Low-Opacity Gray Stick Scrollbar (Removes White Track & Arrows)
+   ========================================================================== */
+.umak-container::-webkit-scrollbar {
+    display: block !important; /* Overrides global scrollbar hiding specifically here */
+    width: 5px; /* Ultra-slim stick width */
+    height: 5px;
+}
+
+/* Makes the white background bar 100% invisible */
+.umak-container::-webkit-scrollbar-track {
+    background: transparent !important;
+    margin: 15px 0 110px 0; /* Keeps the stick from touching the top/bottom screen edges */
+}
+
+/* Removes the top and bottom arrow buttons */
+.umak-container::-webkit-scrollbar-button {
+    display: none !important;
+    width: 0;
+    height: 0;
+}
+
+/* The low-opacity gray stick */
+.umak-container::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.22);
+    border-radius: 999px;
+    transition: background 0.2s ease;
+}
+
+/* Slightly brighter when dragging or hovering */
+.umak-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.45);
+}
+
+/* ==========================================================================
+   Typography & Suggestion Chips
+   ========================================================================== */
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+}
+
+.hero .highlight {
+    color: #F5D245; 
+}
+
+.hero p {
+    color: #8b9cc2;
+    font-size: 1.05rem;
+}
+
+.grid-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    width: 100%;
+    max-width: 650px;
+}
+
+.action-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #a0b2d6; 
+    padding: 1.25rem 1.5rem;
+    border-radius: 16px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+}
+
+.action-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* ==========================================================================
+   Transparent Floating Footer Search Bar
+   ========================================================================== */
+/* Pulls the search bar up closer to the chat messages */
+.umak-body footer {
+    width: 100%;
+    padding: 6px 2rem 2.5rem 2rem; /* 2.5rem bottom padding pushes the chatbox slightly up */
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0;
+    flex-shrink: 0;
+}
+
+.search-container {
+    pointer-events: auto; /* Re-enables clicking inside the search bar itself */
+    position: relative;
+    width: 100%;
+    max-width: 760px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.55);
+    border-radius: 40px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 1.2rem 4rem 1.2rem 1.75rem;
+    border-radius: 40px;
+    background: rgba(12, 21, 44, 0.65); /* Translucent dark navy glass */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-size: 1.02rem;
+    outline: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.search-input:focus {
+    background: rgba(14, 22, 45, 0.85);
+    border-color: rgba(255, 255, 255, 0.65); /* Clean white border */
+    box-shadow: none; /* Completely removes the glowing ring */
+}
+
+.search-input::placeholder {
+    color: #6b7d9e;
+}
+
+.submit-btn {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+}
+
+.submit-btn:hover {
+    transform: scale(1.06);
+}
+
+/* Mobile Compatibility */
+@media (max-width: 650px) {
+    .grid-buttons {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero h1 {
+        font-size: 2.4rem;
+    }
+    
+    .umak-body header {
+        justify-content: center;
+        padding: 1.25rem;
+    }
+
+    .umak-container {
+        padding: 1rem 1rem 130px 1rem;
+    }
+
+    .umak-body footer {
+        padding: 0.75rem 1rem 1.5rem 1rem;
+    }
+}
+
+/* ==========================================================================
+   Chat Page Intro & Typing Animations
+   ========================================================================== */
+@keyframes umak-fade-in-up {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.umak-body header {
+    opacity: 0;
+    animation: umak-fade-in-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.umak-container {
+    opacity: 0;
+    animation: umak-fade-in-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
+}
+
+.umak-body footer {
+    opacity: 0;
+    animation: umak-fade-in-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+}
+
+.typing-cursor::after {
+    content: '|';
+    color: #F5D245;
+    font-weight: 300;
+    margin-left: 4px;
+    animation: cursor-blink 0.8s step-end infinite;
+}
+
+.blinking-exclamation {
+    color: #F5D245;
+    animation: cursor-blink 1s step-end infinite; 
+}
+
+@keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.comparison-half ul li::before,
+.custom-icon-list li::before {
+    display: none !important;
+    content: none !important;
+}
+
+/* 2. Force the side-by-side flex layout and remove old dot padding */
+.custom-icon-list li {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 15px !important;
+    padding-left: 0 !important; 
+}
+
+/* 3. Lock the wrapper and the SVG to exactly 24px so they can't grow */
+.list-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;          
+    width: 24px !important;             
+    height: 24px !important;
+    margin-top: 2px !important;         
+}
+
+.list-icon svg {
+    width: 24px !important;
+    height: 24px !important;
+    flex-shrink: 0 !important;
+    display: block !important;
+}
+
+/* Force the icons on the DARK side to be light gray/white */
+.dark-bg .list-icon svg {
+    display: block !important;
+    width: 24px !important;
+    height: 24px !important;
+    fill: #cbd5e1 !important; 
+    visibility: visible !important;
+}
+
+/* Force the icons on the YELLOW side to be dark blue */
+.yellow-bg .list-icon svg {
+    display: block !important;
+    width: 24px !important;
+    height: 24px !important;
+    fill: #051329 !important;
+    visibility: visible !important;
+}
+
+/* =========================================
+   RESPONSIVE NAVIGATION DESIGN
+   ========================================= */
+
+/* --- DESKTOP VIEW (Screens 769px and wider) --- */
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: none; /* Hides the burger bar on desktop */
+  }
+
+  .nav-links {
+    display: flex; /* Keeps the text links visible on desktop[cite: 2] */
+    flex-direction: row;
+  }
+}
+
+/* =========================================
+   MOBILE VIEW (Screens 768px and smaller)
+   ========================================= */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block; 
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 5px;
+  }
+
+  .nav-links {
+    /* Base state: Hidden */
+    display: none; 
+    
+    /* Minimalistic Dropdown Styling */
+    position: absolute;
+    top: 100%; /* Positions it directly below the header */
+    left: 0; 
+    width: 100%; /* Full width */
+    flex-direction: column;
+    background-color: #0b1220; /* Dark background to match your theme */
+    padding: 10px 0 20px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+  }
+
+  /* Styling individual links in the dropdown */
+  .nav-links a {
+    padding: 15px 30px;
+    color: #a0aec0; /* Subdued gray text, matching image_8a60ae.png */
+    text-decoration: none;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Subtle separator */
+    transition: color 0.3s ease;
+  }
+
+  /* Remove border from the last link for a cleaner look */
+  .nav-links a:last-child {
+    border-bottom: none;
+  }
+
+  /* Hover state for links */
+  .nav-links a:hover {
+    color: #ffffff;
+  }
+
+  /* ACTIVE STATE: Triggered by JavaScript */
+  .nav-links.active {
+    display: flex; 
+  }
+}
+
+/* ==========================================================================
+   Interactive Fixed-Length Scrollbar (Never Changes Size)
+   ========================================================================== */
+
+/* 1. Hide the stretchy default browser scrollbar */
+#chat-content-wrapper {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+
+#chat-content-wrapper::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+/* 2. Pin the scrollbar track cleanly to the right of the 900px chat container */
+.custom-scroll-track {
+    position: fixed;
+    top: 95px;
+    bottom: 135px;
+    left: min(calc(50% + 445px), calc(100vw - 18px));
+    width: 6px;
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+/* Only shows when there is enough content to scroll */
+.custom-scroll-track.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* 3. The movable scrollbar stick (Height is locked at 42px forever) */
+.custom-scroll-thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 42px; /* Fixed size: never stretches or shrinks */
+    background: rgba(148, 163, 184, 0.28);
+    border-radius: 999px;
+    cursor: grab;
+    transition: background 0.2s ease;
+}
+
+.custom-scroll-thumb:hover,
+.custom-scroll-thumb.dragging {
+    background: rgba(148, 163, 184, 0.55);
+    cursor: grabbing;
+}
+/* Keeps the "Good day, Heron!" screen centered before you start chatting */
+#greeting-container {
+    margin-top: auto;
+}
+
+#suggestion-chips {
+    margin-bottom: auto;
+}
+
+#site-preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #051329; 
+    z-index: 999999; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.6s;
+}
+
+#site-preloader.hide-preloader {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.preloader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+.preloader-logo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.preloader-logo {
+    width: 55px;
+    height: 55px;
+}
+
+.preloader-text {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.preloader-title {
+    font-weight: 800;
+    color: #ffffff;
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+
+.preloader-subtitle {
+    font-size: 10px;
+    color: #94a3b8;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.loading-bars {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    height: 16px; 
+}
+
+.loading-bars .bar {
+    width: 4px;
+    height: 100%;
+    background-color: #ffffff; 
+    border-radius: 2px;
+    animation: eq-bounce 1s infinite ease-in-out;
+}
+
+.loading-bars .bar:nth-child(1) { animation-delay: 0s; }
+.loading-bars .bar:nth-child(2) { animation-delay: 0.1s; }
+.loading-bars .bar:nth-child(3) { animation-delay: 0.2s; }
+.loading-bars .bar:nth-child(4) { animation-delay: 0.3s; }
+.loading-bars .bar:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes eq-bounce {
+    0%, 100% { transform: scaleY(0.4); opacity: 0.5; }
+    50% { transform: scaleY(1); opacity: 1; }
+}
+/* Clean Image Styling Inside How It Works Boxes */

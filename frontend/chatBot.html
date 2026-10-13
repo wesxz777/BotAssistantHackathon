@@ -14,6 +14,8 @@
 
 <body class="umak-body">
     
+  
+
     <header>
         <a href="index.html" class="logo-link">
             <div class="logo-container">
@@ -26,8 +28,13 @@
         </a>
     </header>
 
-    <!-- Scrollable content wrapper for the chat view -->
-    <main class="umak-container" id="chat-content-wrapper" style="overflow-y: auto; max-height: calc(100vh - 180px); padding-bottom: 2rem;">
+    <!-- NEW: Permanent Fixed-Size Scrollbar Stick -->
+    <div class="custom-scroll-track" id="custom-scroll-track">
+        <div class="custom-scroll-thumb" id="custom-scroll-thumb"></div>
+    </div>
+
+    <!-- Scrollable content wrapper -->
+    <main class="umak-container" id="chat-content-wrapper" style="overflow-y: auto; flex: 1; margin-top: 0; justify-content: flex-start; padding-bottom: 2.5rem; -webkit-mask-image: linear-gradient(to bottom, transparent 0px, black 25px, black calc(100% - 65px), transparent 100%); mask-image: linear-gradient(to bottom, transparent 0px, black 25px, black calc(100% - 65px), transparent 100%);">
         
         <!-- Greeting screen (hidden once chat starts) -->
         <div class="hero" id="greeting-container">
@@ -44,7 +51,7 @@
         </div>
 
         <!-- Container where user & bot chat bubbles will be appended -->
-        <div id="chat-messages-container" style="display: flex; flex-direction: column; width: 100%; max-width: 800px; margin: 0 auto;"></div>
+        <div id="chat-messages-container"></div>
 
     </main>
 
@@ -68,19 +75,18 @@
     </footer>
 
     <!-- Link your chat script -->
-    <script src="js/chat.js"></script>
+    <script src="js/chat.js?v=6"></script>
 
-    <!-- Upgraded Typing Animation Script -->
+    <!-- Combined Typing Animation + Fixed-Size Scrollbar Script -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            // 1. Original "Heron!" Typing & Blinking Exclamation
             const nameSpan = document.getElementById("typing-name");
             const exclamation = document.getElementById("exclamation-mark");
             const textToType = "Heron";
             let charIndex = 0;
 
-            // Wait 800ms for the page slide-up animation to finish, then start typing
             setTimeout(() => {
-                // Add the typing cursor effect
                 nameSpan.classList.add("typing-cursor");
 
                 const typingInterval = setInterval(() => {
@@ -88,21 +94,76 @@
                         nameSpan.textContent += textToType.charAt(charIndex);
                         charIndex++;
                     } else {
-                        // Word is finished
                         clearInterval(typingInterval); 
-                        
-                        // Remove the typing cursor line
                         nameSpan.classList.remove("typing-cursor");
-                        
-                        // Strip the inline opacity so the animation can run freely
                         exclamation.style.opacity = "";
-                        
-                        // Start the appearing/disappearing animation on the exclamation mark
                         exclamation.classList.add("blinking-exclamation");
                     }
-                }, 120); // 120ms is the sweet spot for smooth, premium typing
-            }, 800); 
+                }, 120);
+            }, 800);
+
+            // 2. Interactive Fixed-Size Scrollbar Stick
+            const chatWrapper = document.getElementById("chat-content-wrapper");
+            const scrollTrack = document.getElementById("custom-scroll-track");
+            const scrollThumb = document.getElementById("custom-scroll-thumb");
+
+            if (!chatWrapper || !scrollTrack || !scrollThumb) return;
+
+            function syncScrollbar() {
+                const maxScroll = chatWrapper.scrollHeight - chatWrapper.clientHeight;
+                
+                if (maxScroll <= 2) {
+                    scrollTrack.classList.remove("visible");
+                    return;
+                }
+
+                scrollTrack.classList.add("visible");
+                const scrollRatio = chatWrapper.scrollTop / maxScroll;
+                const trackAvailableSpace = scrollTrack.clientHeight - scrollThumb.offsetHeight;
+                const thumbTop = scrollRatio * trackAvailableSpace;
+
+                scrollThumb.style.transform = `translateY(${thumbTop}px)`;
+            }
+
+            chatWrapper.addEventListener("scroll", syncScrollbar);
+            window.addEventListener("resize", syncScrollbar);
+
+            const observer = new MutationObserver(() => {
+                requestAnimationFrame(syncScrollbar);
+            });
+            observer.observe(chatWrapper, { childList: true, subtree: true, characterData: true });
+
+            let isDragging = false;
+            let dragStartY = 0;
+            let dragStartScrollTop = 0;
+
+            scrollThumb.addEventListener("mousedown", (e) => {
+                isDragging = true;
+                dragStartY = e.clientY;
+                dragStartScrollTop = chatWrapper.scrollTop;
+                scrollThumb.classList.add("dragging");
+                document.body.style.userSelect = "none";
+                e.preventDefault();
+            });
+
+            window.addEventListener("mousemove", (e) => {
+                if (!isDragging) return;
+                const deltaY = e.clientY - dragStartY;
+                const trackAvailableSpace = scrollTrack.clientHeight - scrollThumb.offsetHeight;
+                const maxScroll = chatWrapper.scrollHeight - chatWrapper.clientHeight;
+                chatWrapper.scrollTop = dragStartScrollTop + (deltaY / trackAvailableSpace) * maxScroll;
+            });
+
+            window.addEventListener("mouseup", () => {
+                if (isDragging) {
+                    isDragging = false;
+                    scrollThumb.classList.remove("dragging");
+                    document.body.style.userSelect = "";
+                }
+            });
         });
     </script>
+
+
 </body>
 </html>

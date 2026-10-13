@@ -7,10 +7,12 @@
     <!-- Links HTML to CSS -->
     <link rel="stylesheet" href="style.css">
     <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css" />
 </head>
     <body class="bg-[#081226] text-white">
+
+        
 
         <video autoplay loop muted playsinline class="site-bg-video">
             <source src="assets/Video/umakvid.mp4" type="video/mp4">
@@ -100,29 +102,49 @@
         </div>
     </section>
 
-    <!-- 2. Resolving Challenges Section -->
-   <section class="split-section" id="split-section">
+   <!-- 2. Resolving Challenges Section -->
+    <section class="split-section" id="split-section">
         <div class="container">
             <div class="split-content">
                 
-                <!-- MASCOT MOVED TO THE LEFT -->
-                <div class="split-image animate-slide-left ">
+                <!-- MASCOT ON THE LEFT (Untouched) -->
+                <div class="split-image animate-slide-left">
                     <div class="mascot-sprite-animated"></div>
                 </div>
 
-                <!-- TEXT MOVED TO THE RIGHT & PLACED INSIDE BOXES -->
+                <!-- ARCHITECTURAL SPEC LAYOUT ON THE RIGHT -->
                 <div class="split-text">
-                    
-                    <!-- Box 1: The Heading -->
-                    <div class="challenge-box animate-slide-left delay-1">
-                        <h2>Resolving Decades-Old <br>Campus Challenges In <br>Milliseconds</h2>
-                    </div>
-                    
-                    <!-- Box 2: The Paragraph -->
-                    <div class="challenge-box animate-slide-left delay-2">
-                        <p>Built specifically to eliminate university friction points for students, administrative personnel, and university researchers through automated computational decision-making.</p>
-                    </div>
+                    <div class="arch-layout animate-slide-left delay-1">
+                        
+                        <h2 class="arch-title">
+                            Resolving Decades-Old Campus Challenges in 
+                            <span class="arch-highlight">Milliseconds.</span>
+                        </h2>
+                        
+                        <p class="arch-lead">
+                            Built specifically to eliminate university friction points through automated computational decision-making.
+                        </p>
 
+                        <!-- Clean 3-Column Target Strip -->
+                        <div class="arch-grid">
+                            <div class="arch-col">
+                                <span class="arch-num">01</span>
+                                <h4>Students</h4>
+                                <p>Instant schedules &amp; campus navigation.</p>
+                            </div>
+                            <div class="arch-col">
+                                <span class="arch-num">02</span>
+                                <h4>Admin Personnel</h4>
+                                <p>Automated routine inquiry handling.</p>
+                            </div>
+                            <div class="arch-col">
+                                <span class="arch-num">03</span>
+                                <h4>Researchers</h4>
+                                <p>Direct handbook &amp; policy lookup.</p>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
 
             </div>
@@ -173,70 +195,110 @@
     </section>
 
     <!-- 4. AI Is The Real Change Section -->
-    <section class="comparison-section" id="comparison">
+<section id="comparison" class="comparison-section" style="background: transparent !important;">
         <div class="container">
             <div class="section-header">
-                <h2 class="animate-drop" >AI Is <span class="text-yellow">The Real Change</span> </h2>
-                <p class="animate-drop" >One question replaces a walk across campus.</p>
+                <h2 class="animate-drop">AI Is <span class="text-yellow">The Real Change</span></h2>
+                <p class="animate-drop">One question replaces a walk across campus.</p>
             </div>
             <div class="comparison-box">
                 <div class="comparison-half dark-bg">
-                     <div class="step-card animate-drop delay-1">
-                    <h3 class="animate-drop">Without the assistant</h3>
-                    <ul>
-                        <li>Check several information posts</li>
-                        <li>Line up at the office to ask</li>
-                        <li>Get different answers from different people</li>
-                    </ul>
+                    <div class="step-card animate-drop delay-1">
+                        <h3 class="animate-drop">Without the assistant</h3>
+                        <ul class="custom-icon-list">
+                            <li>
+                                <span class="list-icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/></svg>
+                                </span>
+                                <span>Check several information posts</span>
+                            </li>
+                            <li>
+                                <span class="list-icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                                </span>
+                                <span>Line up at the office to ask</span>
+                            </li>
+                            <li>
+                                <span class="list-icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 6h-2v9H6v2c0 1.1.9 2 2 2h11l4 4V8c0-1.1-.9-2-2-2zm-4 2V4c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v14l4-4h10c1.1 0 2-.9 2-2z"/></svg>
+                                </span>
+                                <span>Get different answers from different people</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <div class="comparison-half yellow-bg">
-                     <div class="step-card animate-drop delay-2">
-                    <h3 class="animate-drop">With the assistant</h3>
-                    <ul>
-                        <li>Ask in plain language, any time</li>
-                        <li>Get the answer and the document it came from</li>
-                        <li>Told plainly when the sources don't cover it</li>
-                    </ul>
+                    <div class="step-card animate-drop delay-2">
+                        <h3 class="animate-drop">With the assistant</h3>
+                        <ul class="custom-icon-list">
+                            <li>
+                                <span class="list-icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+                                </span>
+                                <span>Ask in plain language, any time</span>
+                            </li>
+                            <li>
+                                <span class="list-icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-10 14H5v-2h5v2zm0-4H5v-2h5v2zm0-4H5V7h5v2zm9.7 2.12l-5.66 5.66L10.5 13.2l1.41-1.41 2.12 2.12 4.24-4.24 1.43 1.45z"/></svg>
+                                </span>
+                                <span>Get the answer and the document it came from</span>
+                            </li>
+                            <li>
+                                <span class="list-icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                                </span>
+                                <span>Told plainly when the sources don't cover it</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 5. How It Works Section -->
-    <section class="how-it-works-section" id="how-it-works-section">
-    <div class="container">
-        <div class="section-header animate-drop">
-            <h2>How It Works</h2>
-            <p>From question to answer in three steps.</p>
-        </div>
-        <div class="grid-3">
-            <!-- Step 1 gets the first delay -->
-            <div class="step-card animate-drop delay-1">
+
+
+ <!-- 5. How It Works Section -->
+<section class="how-it-works-section" id="how-it-works-section">
+    
+    <!-- 1. The Carousel Track -->
+    <div class="carousel-wrapper animate-drop delay-1">
+        <div class="carousel-track" id="how-it-works-track">
+            
+            <div class="step-card carousel-card">
                 <div class="step-number">1</div>
                 <h3>Ask</h3>
                 <p>Type a question about enrollment, schedules, or services.</p>
             </div>
             
-            <!-- Step 2 waits a little longer -->
-            <div class="step-card animate-drop delay-2">
+            <div class="step-card carousel-card">
                 <div class="step-number">2</div>
                 <h3>Search the sources</h3>
                 <p>The assistant looks only through the provided university documents.</p>
             </div>
             
-            <!-- Step 3 waits the longest -->
-            <div class="step-card animate-drop delay-3">
+            <div class="step-card carousel-card">
                 <div class="step-number">3</div>
                 <h3>Answer with a source</h3>
                 <p>You get a direct answer and the document it came from, or a clear "Not found".</p>
             </div>
+            
+        </div> 
+    </div> 
+    
+    <!-- 2. Header and Dots (Removed .container so it can share the card's exact grid sizing) -->
+    <div class="how-it-works-bottom animate-drop delay-2">
+        <div class="section-header" style="margin-bottom: 0;">
+            <h2>How It Works</h2>
+            <p>From question to answer in three steps.</p>
         </div>
+        
+        <div class="carousel-pagination" id="carousel-pagination"></div>
     </div>
+
 </section>
 
-    <!-- 6. Call To Action (Start Experiencing It) -->
+  <!-- 6. Call To Action (Start Experiencing It) -->
     <section class="cta-section" id="cta-section">
         <div class="container">
             <div class="cta-header">
@@ -255,6 +317,10 @@
         </div>
     </section>
 
+
+
+
+</section>
     <!-- 7. Footer Section -->
     <footer class="site-footer">
         <!-- Background image area with ABOUT US text -->
@@ -333,59 +399,161 @@
     });
 </script>
 
-    <script>
+<script>
     document.addEventListener("DOMContentLoaded", () => {
-        const ctaHeading = document.getElementById("typing-cta-heading");
-        if (!ctaHeading) return;
+        const track = document.getElementById('how-it-works-track');
+        const paginationContainer = document.getElementById('carousel-pagination');
+        if (!track || !paginationContainer) return;
 
-        const baseText = "Start Experiencing It";
-        let hasAnimated = false;
+        const cards = track.querySelectorAll('.carousel-card');
+        let activeIndex = 0; // Tracks which card we are currently on
 
-        const observer = new IntersectionObserver((entries) => {
+        // 1. AUTO-GENERATE DOTS
+        paginationContainer.innerHTML = ''; 
+        cards.forEach((_, index) => {
+            const dot = document.createElement('span');
+            dot.classList.add('dot');
+            if (index === 0) dot.classList.add('active');
+            dot.setAttribute('data-index', index);
+            paginationContainer.appendChild(dot);
+        });
+
+        const dots = paginationContainer.querySelectorAll('.dot');
+
+        const updateVisuals = (index) => {
+            cards.forEach(c => c.classList.remove('active-card'));
+            dots.forEach(d => d.classList.remove('active'));
+            if(cards[index]) cards[index].classList.add('active-card');
+            if(dots[index]) dots[index].classList.add('active');
+            activeIndex = index;
+        };
+
+        /* -----------------------------------------------------
+           2. BULLETPROOF CENTER DETECTION
+           Creates a 2% wide invisible line exactly in the middle 
+           of the screen. Whichever card touches it becomes active.
+           ----------------------------------------------------- */
+        const carouselObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting && !hasAnimated) {
-                    hasAnimated = true;
-                    startTypingAndLoopDots(ctaHeading, baseText);
-                    observer.unobserve(entry.target);
+                if (entry.isIntersecting) { 
+                    const index = Array.from(cards).indexOf(entry.target);
+                    updateVisuals(index);
                 }
             });
-        }, { threshold: 0.5 });
+        }, {
+            root: track,
+            rootMargin: '0px -49% 0px -49%', // The center "tripwire"
+            threshold: 0 
+        });
 
-        observer.observe(document.getElementById("cta-section"));
+        cards.forEach(card => carouselObserver.observe(card));
 
-        function startTypingAndLoopDots(element, text) {
-            element.textContent = "";
-            element.classList.add("typing-cursor");
-            let charIndex = 0;
+        // Dot Click Navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                track.style.scrollBehavior = 'smooth';
+                cards[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            });
+        });
 
-            // Step 1: Type out "Start Experiencing It" character by character
-            function typeWriter() {
-                if (charIndex < text.length) {
-                    element.textContent += text.charAt(charIndex);
-                    charIndex++;
-                    setTimeout(typeWriter, 80); // Speed of typing per character
-                } else {
-                    // Step 2: Once finished typing, begin the dot cycling loop
-                    setTimeout(startDotLoop, 400);
-                }
+       /* -----------------------------------------------------
+           3. CONSTRAINED 1-CARD SWIPE LOGIC
+           ----------------------------------------------------- */
+        let isDown = false;
+        let startX;
+        let startScrollLeft;
+        let dragDistance = 0;
+
+        track.addEventListener('mousedown', (e) => {
+            isDown = true;
+            track.classList.add('active-drag');
+            
+            track.style.scrollSnapType = 'none'; 
+            track.style.scrollBehavior = 'auto'; 
+            
+            startX = e.pageX;
+            startScrollLeft = track.scrollLeft;
+            dragDistance = 0;
+        });
+
+        const handleMouseUp = () => {
+            if (!isDown) return;
+            isDown = false;
+            track.classList.remove('active-drag');
+            
+            track.style.scrollSnapType = 'x mandatory'; 
+            track.style.scrollBehavior = 'smooth';
+
+            // Lowered to 40 to easily detect the "tug"
+            if (dragDistance < -40 && activeIndex < cards.length - 1) {
+                // Swiped Left -> Go to Next Card EXACTLY
+                cards[activeIndex + 1].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            } else if (dragDistance > 40 && activeIndex > 0) {
+                // Swiped Right -> Go to Prev Card EXACTLY
+                cards[activeIndex - 1].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            } else {
+                // Snap back if they barely moved it
+                cards[activeIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
+        };
 
-            typeWriter();
+        track.addEventListener('mouseleave', handleMouseUp);
+        track.addEventListener('mouseup', handleMouseUp);
+
+        track.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault(); 
+            
+            const currentX = e.pageX;
+            dragDistance = currentX - startX;
+            
+            // STRICT DESKTOP MOUSE CONSTRAINT: 
+            // Limits the physical mouse drag to a maximum of 100px. 
+            // This prevents dragging across multiple cards in one hold.
+            let clampedDrag = Math.max(-100, Math.min(100, dragDistance));
+            
+            track.scrollLeft = startScrollLeft - clampedDrag;
+    }); // <-- This was line 516
+
+    // --- PASTE THE AUTO-SCROLL LOGIC HERE INSTEAD ---
+    let autoScrollTimer;
+    const scrollInterval = 5000; 
+
+    function startAutoScroll() {
+      autoScrollTimer = setInterval(() => {
+        const firstCard = track.firstElementChild;
+        const scrollAmount = firstCard.clientWidth + 20; 
+
+        if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 10) {
+          track.scrollTo({ left: 0, behavior: 'smooth' }); 
+        } else {
+          track.scrollBy({ left: scrollAmount, behavior: 'smooth' }); 
         }
+      }, scrollInterval);
+    }
 
-        function startDotLoop() {
-            const dotsArray = ["",".", "..", "..."];
-            let dotIndex = 0;
-            const baseText = "Start Experiencing It";
+    track.addEventListener('mouseenter', () => clearInterval(autoScrollTimer));
+    track.addEventListener('mouseleave', startAutoScroll);
+    startAutoScroll();
+    // ------------------------------------------------
 
-            setInterval(() => {
-                ctaHeading.textContent = baseText + dotsArray[dotIndex];
-                dotIndex = (dotIndex + 1) % dotsArray.length;
-            }, 500); // Speed at which the dots switch (. -> .. -> ...)
-        }
-    });
+  }); // <-- This was line 517[cite: 12]
 </script>
 
+<!-- PASTE THE NEW SCRIPT HERE -->
+<script>
+// Mobile Burger Menu Toggle
+document.addEventListener('DOMContentLoaded', () => {
+  const menuToggle = document.getElementById('menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+
+  if(menuToggle && navLinks) {
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+  }
+});
+</script>
 
 </body>
 </html>
