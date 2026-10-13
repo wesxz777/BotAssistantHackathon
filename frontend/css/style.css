@@ -368,11 +368,12 @@ img.heron-hero-img {
 
 .arch-title {
     color: #ffffff;
-    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-size: clamp(1.4rem, 2.2vw, 1.8rem);
     font-weight: 800;
     line-height: 1.2;
     margin-bottom: 12px;
     letter-spacing: -0.3px;
+    max-width: 500px;
 }
 
 .arch-highlight {
@@ -791,18 +792,20 @@ img.heron-hero-img {
 }
 
 /* =========================================
-   Bottom Layout (Header + Dots Perfectly Gridded to Card)
+   Bottom Layout (Strictly Gridded to Card Edges)
    ========================================= */
 .how-it-works-bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
     
-    /* THE FIX: Exact same width and max-width as the center card */
+    /* THE STRICT GRID FIX: 
+       This perfectly mimics the carousel-card's exact width (76%) 
+       and limit (900px) so they are physically identical in size */
     width: 76%; 
-    max-width: 900px; 
+    max-width: 700px; 
     
-    /* Centers it perfectly under the active card */
+    /* Forces it dead-center, directly under the active card */
     margin: 40px auto 0 auto; 
     padding: 0; 
     box-sizing: border-box;
@@ -811,10 +814,9 @@ img.heron-hero-img {
 .how-it-works-bottom .section-header {
     text-align: left;
     margin-bottom: 0;
-    padding: 0; /* Removes any stray padding */
+    padding: 0; 
 }
 
-/* Made the heading slightly smaller */
 .how-it-works-bottom h2 {
     font-size: clamp(1.7rem, 3.5vw, 2.1rem); 
     font-weight: 700;
@@ -822,7 +824,6 @@ img.heron-hero-img {
     margin-bottom: 5px;
 }
 
-/* Made the subtitle slightly smaller */
 .how-it-works-bottom p {
     font-size: 0.95rem; 
     color: #94a3b8;
@@ -855,10 +856,11 @@ img.heron-hero-img {
 /* Mobile Fixes */
 @media (max-width: 768px) {
     .how-it-works-bottom {
+        /* Matches the exact 85% width of the mobile card */
+        width: 85%; 
         flex-direction: column;
         text-align: center;
         gap: 20px;
-        width: 85%; /* Matches the 85% width of the mobile card */
     }
     .how-it-works-bottom .section-header {
         text-align: center;
@@ -2271,4 +2273,25 @@ body::-webkit-scrollbar {
     0%, 100% { transform: scaleY(0.4); opacity: 0.5; }
     50% { transform: scaleY(1); opacity: 1; }
 }
-/* Clean Image Styling Inside How It Works Boxes */
+.carousel-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.step-box-img {
+    display: block;
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    object-position: center;
+    margin-top: 24px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .step-box-img {
+        height: 170px;
+    }
+}
