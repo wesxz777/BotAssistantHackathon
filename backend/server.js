@@ -370,6 +370,7 @@ function getCampusLocationAnswer(question) {
   const locationQuestion = normalizedQuestion
     .replace(/^.*?\bwhere\s+(?:is|can i find)\b/, '')
     .replace(/\b(the|a|an)\b/g, ' ')
+    .replace(/\b(located|location|found)\b/g, ' ')
     .replace(/[?!.]/g, ' ')
     .trim();
   const requestedTerms = tokenize(locationQuestion)
