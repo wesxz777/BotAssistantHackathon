@@ -1,4 +1,4 @@
-# UMak AI Assistant
+﻿# UMak AI Assistant
 
 The UMak AI Assistant is a web-based conversational platform for the
 University of Makati. It helps students and university stakeholders find
