@@ -64,7 +64,7 @@
                 <a href="#how-it-works-section">How It Works</a>
             </nav>
             
-            <a href="chatBot.html" class="btn-primary"> Meet your AI  -></a>
+            <a href="chatBot.html" class="btn-primary"> Meet your AI </a>
             
             <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Menu">
         <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -281,31 +281,31 @@
     <div class="carousel-wrapper animate-drop delay-1">
         <div class="carousel-track" id="how-it-works-track">
             
-            <div class="step-card carousel-card">
-                <div class="step-header-row">
-                    <div class="step-number">1</div>
-                    <h3>Ask</h3>
+            <div class="step-card carousel-card" style="display: flex; flex-direction: column; padding: 36px 48px;">
+                <div class="step-header-row" style="display: flex; flex-direction: row; align-items: center; gap: 14px; margin-bottom: 8px;">
+                    <div class="step-number" style="margin: 0; flex-shrink: 0;">1</div>
+                    <h3 style="margin: 0;">Ask</h3>
                 </div>
-                <p>Type a question about enrollment, schedules, or services.</p>
-                <img src="assets/images/ask.png" alt="Ask" class="step-box-img">
+                <p style="margin: 0 0 16px 0;">Type a question about enrollment, schedules, or services.</p>
+                <img src="assets/images/ask.png" alt="Ask" class="step-box-img" style="width: auto; max-width: 100%; height: auto; max-height: 340px; margin: auto; display: block; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08);">
             </div>
             
-            <div class="step-card carousel-card">
-                <div class="step-header-row">
-                    <div class="step-number">2</div>
-                    <h3>Search the sources</h3>
+            <div class="step-card carousel-card" style="display: flex; flex-direction: column; padding: 36px 48px;">
+                <div class="step-header-row" style="display: flex; flex-direction: row; align-items: center; gap: 14px; margin-bottom: 8px;">
+                    <div class="step-number" style="margin: 0; flex-shrink: 0;">2</div>
+                    <h3 style="margin: 0;">Search the sources</h3>
                 </div>
-                <p>The assistant looks only through the provided university documents.</p>
-                <img src="assets/images/search.png" alt="Search" class="step-box-img">
+                <p style="margin: 0 0 16px 0;">The assistant looks only through the provided university documents.</p>
+                <img src="assets/images/search.png" alt="Search" class="step-box-img" style="width: auto; max-width: 100%; height: auto; max-height: 340px; margin: auto; display: block; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08);">
             </div>
             
-            <div class="step-card carousel-card">
-                <div class="step-header-row">
-                    <div class="step-number">3</div>
-                    <h3>Answer with a source</h3>
+            <div class="step-card carousel-card" style="display: flex; flex-direction: column; padding: 36px 48px;">
+                <div class="step-header-row" style="display: flex; flex-direction: row; align-items: center; gap: 14px; margin-bottom: 8px;">
+                    <div class="step-number" style="margin: 0; flex-shrink: 0;">3</div>
+                    <h3 style="margin: 0;">Answer with a source</h3>
                 </div>
-                <p>You get a direct answer and the document it came from, or a clear "Not found".</p>
-                <img src="assets/images/response.png" alt="Response" class="step-box-img">
+                <p style="margin: 0 0 16px 0;">You get a direct answer and the document it came from, or a clear "Not found".</p>
+                <img src="assets/images/response.png" alt="Response" class="step-box-img" style="width: auto; max-width: 100%; height: auto; max-height: 340px; margin: auto; display: block; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08);">
             </div>
             
         </div> 
@@ -384,6 +384,192 @@
    <!-- SYMMETRICAL AUTO-ADJUSTING CAROUSEL SCRIPT -->
 <script>
     document.addEventListener("DOMContentLoaded", () => {
+        const track = document.getElementById('how-it-works-track');
+        const paginationContainer = document.getElementById('carousel-pagination');
+        if (!track || !paginationContainer) return;
+
+        const cards = track.querySelectorAll('.carousel-card');
+        let activeIndex = 0;
+
+        // 1. FORCE START AT CARD 1 ON EVERY REFRESH
+        const resetToFirstCard = () => {
+            track.style.scrollBehavior = 'auto';
+            track.scrollLeft = 0;
+            cards.forEach((c, i) => c.classList.toggle('active-card', i === 0));
+            const allDots = paginationContainer.querySelectorAll('.dot');
+            allDots.forEach((d, i) => d.classList.toggle('active', i === 0));
+            activeIndex = 0;
+            requestAnimationFrame(() => {
+                track.style.scrollBehavior = 'smooth';
+            });
+        };
+
+        // 2. AUTO-GENERATE DOTS
+        paginationContainer.innerHTML = ''; 
+        cards.forEach((_, index) => {
+            const dot = document.createElement('span');
+            dot.classList.add('dot');
+            if (index === 0) dot.classList.add('active');
+            dot.setAttribute('data-index', index);
+            paginationContainer.appendChild(dot);
+        });
+
+        const dots = paginationContainer.querySelectorAll('.dot');
+
+        // Run reset immediately and after browser layout/refresh restoration
+        resetToFirstCard();
+        window.addEventListener('load', () => {
+            resetToFirstCard();
+            setTimeout(resetToFirstCard, 50);
+        });
+
+        const updateVisuals = (index) => {
+            cards.forEach(c => c.classList.remove('active-card'));
+            dots.forEach(d => d.classList.remove('active'));
+            if (cards[index]) cards[index].classList.add('active-card');
+            if (dots[index]) dots[index].classList.add('active');
+            activeIndex = index;
+        };
+
+        /* -----------------------------------------------------
+           3. CENTER DETECTION
+           ----------------------------------------------------- */
+        const carouselObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) { 
+                    const index = Array.from(cards).indexOf(entry.target);
+                    updateVisuals(index);
+                }
+            });
+        }, {
+            root: track,
+            rootMargin: '0px -49% 0px -49%',
+            threshold: 0 
+        });
+
+        cards.forEach(card => carouselObserver.observe(card));
+
+        // Dot Click Navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                track.style.scrollBehavior = 'smooth';
+                cards[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            });
+        });
+
+        /* -----------------------------------------------------
+           4. CONSTRAINED 1-CARD SWIPE LOGIC
+           ----------------------------------------------------- */
+        let isDown = false;
+        let startX;
+        let startScrollLeft;
+        let dragDistance = 0;
+
+        track.addEventListener('mousedown', (e) => {
+            isDown = true;
+            track.classList.add('active-drag');
+            track.style.scrollSnapType = 'none'; 
+            track.style.scrollBehavior = 'auto'; 
+            startX = e.pageX;
+            startScrollLeft = track.scrollLeft;
+            dragDistance = 0;
+        });
+
+        const handleMouseUp = () => {
+            if (!isDown) return;
+            isDown = false;
+            track.classList.remove('active-drag');
+            track.style.scrollSnapType = 'x mandatory'; 
+            track.style.scrollBehavior = 'smooth';
+
+            if (dragDistance < -40 && activeIndex < cards.length - 1) {
+                cards[activeIndex + 1].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            } else if (dragDistance > 40 && activeIndex > 0) {
+                cards[activeIndex - 1].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            } else {
+                cards[activeIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        };
+
+        track.addEventListener('mouseleave', handleMouseUp);
+        track.addEventListener('mouseup', handleMouseUp);
+
+        track.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault(); 
+            const currentX = e.pageX;
+            dragDistance = currentX - startX;
+            let clampedDrag = Math.max(-100, Math.min(100, dragDistance));
+            track.scrollLeft = startScrollLeft - clampedDrag;
+        });
+
+        /* -----------------------------------------------------
+           5. AUTO-SCROLL (Only runs when section is on screen)
+           ----------------------------------------------------- */
+        let autoScrollTimer = null;
+        const scrollInterval = 5000; 
+
+        function startAutoScroll() {
+            clearInterval(autoScrollTimer);
+            autoScrollTimer = setInterval(() => {
+                const nextIndex = (activeIndex + 1) % cards.length;
+                if (nextIndex === 0) {
+                    track.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    cards[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                }
+            }, scrollInterval);
+        }
+
+        // Only start auto-scrolling when the user can actually see the section
+        const sectionVisibilityObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startAutoScroll();
+                } else {
+                    clearInterval(autoScrollTimer);
+                }
+            });
+        }, { threshold: 0.25 });
+
+        sectionVisibilityObserver.observe(track);
+
+        track.addEventListener('mouseenter', () => clearInterval(autoScrollTimer));
+        track.addEventListener('mouseleave', startAutoScroll);
+    });
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    const preloader = document.getElementById('site-preloader');
+    let preloaderHidden = false;
+
+    const hidePreloader = () => {
+        if (!preloaderHidden && preloader) {
+            preloaderHidden = true;
+            preloader.classList.add('hide-preloader');
+        }
+    };
+
+    // Hides when page finishes loading, or forces hide after 2 seconds
+    window.addEventListener('load', hidePreloader);
+    setTimeout(hidePreloader, 2000); 
+
+
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
         const wordTrack = document.getElementById('word-track');
         const words = wordTrack.querySelectorAll('.word');
         
@@ -418,178 +604,6 @@
             }
         }, 3500);
     });
-</script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const track = document.getElementById('how-it-works-track');
-        const paginationContainer = document.getElementById('carousel-pagination');
-        if (!track || !paginationContainer) return;
-
-        const cards = track.querySelectorAll('.carousel-card');
-        let activeIndex = 0; // Tracks which card we are currently on
-
-        // 1. AUTO-GENERATE DOTS
-        paginationContainer.innerHTML = ''; 
-        cards.forEach((_, index) => {
-            const dot = document.createElement('span');
-            dot.classList.add('dot');
-            if (index === 0) dot.classList.add('active');
-            dot.setAttribute('data-index', index);
-            paginationContainer.appendChild(dot);
-        });
-
-        const dots = paginationContainer.querySelectorAll('.dot');
-
-        const updateVisuals = (index) => {
-            cards.forEach(c => c.classList.remove('active-card'));
-            dots.forEach(d => d.classList.remove('active'));
-            if(cards[index]) cards[index].classList.add('active-card');
-            if(dots[index]) dots[index].classList.add('active');
-            activeIndex = index;
-        };
-
-        /* -----------------------------------------------------
-           2. BULLETPROOF CENTER DETECTION
-           Creates a 2% wide invisible line exactly in the middle 
-           of the screen. Whichever card touches it becomes active.
-           ----------------------------------------------------- */
-        const carouselObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) { 
-                    const index = Array.from(cards).indexOf(entry.target);
-                    updateVisuals(index);
-                }
-            });
-        }, {
-            root: track,
-            rootMargin: '0px -49% 0px -49%', // The center "tripwire"
-            threshold: 0 
-        });
-
-        cards.forEach(card => carouselObserver.observe(card));
-
-        // Dot Click Navigation
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                track.style.scrollBehavior = 'smooth';
-                cards[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            });
-        });
-
-       /* -----------------------------------------------------
-           3. CONSTRAINED 1-CARD SWIPE LOGIC
-           ----------------------------------------------------- */
-        let isDown = false;
-        let startX;
-        let startScrollLeft;
-        let dragDistance = 0;
-
-        track.addEventListener('mousedown', (e) => {
-            isDown = true;
-            track.classList.add('active-drag');
-            
-            track.style.scrollSnapType = 'none'; 
-            track.style.scrollBehavior = 'auto'; 
-            
-            startX = e.pageX;
-            startScrollLeft = track.scrollLeft;
-            dragDistance = 0;
-        });
-
-        const handleMouseUp = () => {
-            if (!isDown) return;
-            isDown = false;
-            track.classList.remove('active-drag');
-            
-            track.style.scrollSnapType = 'x mandatory'; 
-            track.style.scrollBehavior = 'smooth';
-
-            // Lowered to 40 to easily detect the "tug"
-            if (dragDistance < -40 && activeIndex < cards.length - 1) {
-                // Swiped Left -> Go to Next Card EXACTLY
-                cards[activeIndex + 1].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            } else if (dragDistance > 40 && activeIndex > 0) {
-                // Swiped Right -> Go to Prev Card EXACTLY
-                cards[activeIndex - 1].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            } else {
-                // Snap back if they barely moved it
-                cards[activeIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            }
-        };
-
-        track.addEventListener('mouseleave', handleMouseUp);
-        track.addEventListener('mouseup', handleMouseUp);
-
-        track.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault(); 
-            
-            const currentX = e.pageX;
-            dragDistance = currentX - startX;
-            
-            // STRICT DESKTOP MOUSE CONSTRAINT: 
-            // Limits the physical mouse drag to a maximum of 100px. 
-            // This prevents dragging across multiple cards in one hold.
-            let clampedDrag = Math.max(-100, Math.min(100, dragDistance));
-            
-            track.scrollLeft = startScrollLeft - clampedDrag;
-    }); // <-- This was line 516
-
-    // --- PASTE THE AUTO-SCROLL LOGIC HERE INSTEAD ---
-    let autoScrollTimer;
-    const scrollInterval = 5000; 
-
-    function startAutoScroll() {
-      autoScrollTimer = setInterval(() => {
-        const firstCard = track.firstElementChild;
-        const scrollAmount = firstCard.clientWidth + 20; 
-
-        if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 10) {
-          track.scrollTo({ left: 0, behavior: 'smooth' }); 
-        } else {
-          track.scrollBy({ left: scrollAmount, behavior: 'smooth' }); 
-        }
-      }, scrollInterval);
-    }
-
-    track.addEventListener('mouseenter', () => clearInterval(autoScrollTimer));
-    track.addEventListener('mouseleave', startAutoScroll);
-    startAutoScroll();
-    // ------------------------------------------------
-
-  }); // <-- This was line 517[cite: 12]
-</script>
-
-<!-- PASTE THE NEW SCRIPT HERE -->
-<script>
-// Mobile Burger Menu Toggle
-document.addEventListener('DOMContentLoaded', () => {
-  const menuToggle = document.getElementById('menu-toggle');
-  const navLinks = document.querySelector('.nav-links');
-
-  if(menuToggle && navLinks) {
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-    });
-  }
-});
-</script>
-
-<script>
-    const preloader = document.getElementById('site-preloader');
-    let preloaderHidden = false;
-
-    const hidePreloader = () => {
-        if (!preloaderHidden && preloader) {
-            preloaderHidden = true;
-            preloader.classList.add('hide-preloader');
-        }
-    };
-
-    // Hides when page finishes loading, or forces hide after 2 seconds
-    window.addEventListener('load', hidePreloader);
-    setTimeout(hidePreloader, 2000); 
 </script>
 
 </body>

@@ -117,6 +117,7 @@ body {
     background-color: #facc15;
     color: #051329;
     padding: 3px 20px;
+    border-radius: 6px;
    
     text-decoration: none;
     font-weight: 800;
@@ -229,6 +230,9 @@ body {
 /* =========================================
    2. Hero section
    ========================================= */
+/* =========================================
+   2. Hero section
+   ========================================= */
 
 
 .hero-section {
@@ -296,6 +300,7 @@ body {
     margin: 0 auto 40px auto;
     padding: 0 10px;
 }
+
 
 /* =========================================
    3. Split Section (Challenges)
@@ -558,7 +563,7 @@ img.heron-hero-img {
    5. Comparison Section ("AI Is The Real Change")
    ========================================= */
 .comparison-section {
-    padding: 80px 0 40px;
+    padding: 80px 0 100px;
     background: linear-gradient(180deg, #091e42 0%, #0c2652 100%);
 }
 
@@ -763,13 +768,14 @@ img.heron-hero-img {
 }
 
 /* Shows the full uncropped image fitted inside the card */
+/* Hugs the exact dimensions of the picture with no empty side borders */
 .step-box-img {
     display: block;
-    width: 100%;
+    width: auto;
+    max-width: 100%;
     height: auto;
     max-height: 340px;
-    object-fit: contain;
-    margin-top: auto;
+    margin: auto;
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.08);
     pointer-events: none;
@@ -879,14 +885,14 @@ img.heron-hero-img {
 
 .cta-box {
     /* 1. Set a transparent border to carve out space for the colored gradient */
-    border: 1px solid transparent; 
+    border: .5px , solid , .5; 
     
     /* 2. Multiple Backgrounds: 
        Top Layer: Your original dark blue radial gradient (clipped to the inside)
        Bottom Layer: The colorful gradient (clipped to the border edge) */
     background: 
         radial-gradient(circle at 65% 50%, #16386e 0%, #0b1d3a 55%, #051020 100%) padding-box,
-        linear-gradient(90deg, #facc15, #4ade80, #3b82f6, #facc15) border-box;
+        linear-gradient(90deg, #3b82f6, #facc15, #3b82f6, #facc15) border-box;
         
     /* 3. Make the bottom gradient 300% wider so we have room to slide it */
     background-size: 100% 100%, 300% 100%;
@@ -1507,7 +1513,7 @@ html, body.chat-page-body {
     /* NEW: Scale the animation up!               */
     /* ========================================== */
     /* Added translateX(40px) to slide it to the right. Adjust the 40px to whatever you need! */
-    transform: scale(1.4) translate(55px, -23px); 
+    transform: scale(1.4) translate(-15px, -23px); 
     transform-origin: center center;
 }
 
@@ -2168,7 +2174,11 @@ body::-webkit-scrollbar {
 }
 /* Keeps the "Good day, Heron!" screen centered before you start chatting */
 #greeting-container {
-    margin-top: auto;
+    text-align: center;
+    margin-top: auto !important;
+    margin-bottom: auto !important;
+    /* Offsets the bottom padding of .umak-container so it sits in the true visual center */
+    transform: translateY(-25px);
 }
 
 #suggestion-chips {
