@@ -357,6 +357,28 @@ function getCollegesAnswer(question) {
   return null;
 }
 
+function getUniversityPresidentAnswer(question) {
+  const normalizedQuestion = question.toLowerCase();
+  const asksForPresident = (
+    normalizedQuestion.includes('who is the president')
+    || normalizedQuestion.includes('who is umak president')
+    || normalizedQuestion.includes('university president')
+  );
+
+  if (!asksForPresident) return null;
+
+  for (const [, documentText] of sourceDocuments.entries()) {
+    const presidentMatch = documentText.match(
+      /^[●•]\s*University President:\s*(.+)$/im,
+    );
+    if (!presidentMatch) continue;
+
+    return `According to the official UMak information, the University President is ${presidentMatch[1].trim()}.`;
+  }
+
+  return null;
+}
+
 function getCampusLocationAnswer(question) {
   const normalizedQuestion = question.toLowerCase();
   const asksForLocation = (
@@ -536,6 +558,11 @@ app.post('/api/ask', askLimiter, async (req, res) => {
     const collegesAnswer = getCollegesAnswer(question);
     if (collegesAnswer) {
       return res.status(200).json({ answer: collegesAnswer });
+    }
+
+    const presidentAnswer = getUniversityPresidentAnswer(question);
+    if (presidentAnswer) {
+      return res.status(200).json({ answer: presidentAnswer });
     }
 
     const offeringsAnswer = getProgramOfferingsAnswer(question);
